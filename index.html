@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Calendar</title>
+	</head>
+	<body>
+		<style>
+			/*
+			body {
+				-moz-box-sizing: border-box;
+			}
+			*/
+			#container {
+				position: relative;
+				width: 620px;
+				height: 720px;
+				border-left: 1px solid #D6D6D6;
+				border: 1px solid black;
+				-moz-box-sizing: border-box;
+			}
+			.event1 {
+				height: 100px;
+				width: 596px;
+				left: 10px;
+				border: 1px solid #D6D6D6;
+				-moz-box-sizing: border-box;
+			}
+			.event {
+				border-left: 4px solid #4B6EA9;
+				background-color: white;
+				position: absolute;
+			}
+			.grey {
+				background-color: #ECECEC;
+			}
+			.dark-grey {
+				#686868
+			}
+			.blue {
+				color: #4B6EA9
+			}
+
+			.sans {
+				font-family: Sans-Serif;
+			}
+
+
+		</style>
+		<div id="container" class="grey">
+			<div class="event event1">
+				<h2 class="title blue sans">Sample Item</h2>
+				<h3 class="location sans">Sample Location</h3>
+			</div>
+		</div>
+		<script>
+			function renderTimeline() {
+				var spacing = 720/24;
+				for(i = 0; i <= 12; i++) {
+					console.log((i+8)%12+1);
+					console.log(spacing*i);
+				}
+			}
+			renderTimeline();
+
+			function startTimeCompare(a, b) {
+				return a.start - b.start;
+			};
+
+			function layOutDay(events) {
+				var i, el,
+					container = document.getElementById('container');
+
+				events.sort(startTimeCompare);
+
+				for(i = 0; i < events.length; i++) {
+					el = document.createElement('div');
+					el.className = 'event event1';
+					el.style.top = events[i].start + 'px';
+					container.appendChild(el);			
+				}
+			}
+
+			// var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
+			var events = [ {start: 540, end: 150}, {start: 30, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
+			layOutDay(events);
+		</script>
+
+	</body>
+</html>
