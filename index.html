@@ -86,11 +86,10 @@
 			}
 
 			function layOutDay(events) {
-				var i, j, el, cols = [0], stack = [],
+				var i, j, el, cols = [[]],
 					container = document.getElementById('container');
 
 				events.sort(startTimeCompare);
-
 
 				for(i = 0; i < events.length; i++) {
 
@@ -103,23 +102,24 @@
 
 					// look at first col
 					for(j=0; j<cols.length; j++) {
-						if (events[i].start >= cols[j]) {
-							cols[j] = events[i].end;
+						console.log(cols[j][(cols[j].length - 1)]);
+						if (cols[j].length === 0 || events[i].start >= cols[j][cols[j].length-1].end) {
+							cols[j].push(events[i]);
 							el.style.left = j*100 + 'px';
 							break;
 						}
 					}
 					if(!el.style.left) {
 						el.style.left = (cols.length+1)*100 + 'px';
-						cols[cols.length+1] = events[i].end;
+						cols.push([events[i]]);
 					}
 
 					container.appendChild(el);			
 				}
+				console.log(cols);
 			}
 
-			// var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
-			var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670}, {start: 800, end: 820} ];
+			var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
 			depth(events);
 			layOutDay(events);
 		</script>
