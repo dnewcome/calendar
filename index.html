@@ -76,9 +76,9 @@
 			function depth(events) {
 				var mark;
 				for (i = 0; i < events.length; i++) {
-					events[i].depth = 0;
+					events[i].depth = events[i].col;
 					for (j = 0; j < events.length; j++) {
-						if(events[i].start > events[j].start && overlaps(events[i], events[j])) {
+						if(events[i].col < events[j].col && overlaps(events[i], events[j])) {
 							events[i].depth++;	
 						}		
 					}		
@@ -102,9 +102,9 @@
 
 					// look at first col
 					for(j=0; j<cols.length; j++) {
-						console.log(cols[j][(cols[j].length - 1)]);
 						if (cols[j].length === 0 || events[i].start >= cols[j][cols[j].length-1].end) {
 							cols[j].push(events[i]);
+							events[i].col = j;
 							el.style.left = j*100 + 'px';
 							break;
 						}
@@ -112,16 +112,44 @@
 					if(!el.style.left) {
 						el.style.left = (cols.length+1)*100 + 'px';
 						cols.push([events[i]]);
+						events[i].col = j;
 					}
 
-					container.appendChild(el);			
+					// container.appendChild(el);			
 				}
+				return cols;
+			}
+
+			function renderOne(events, width) {
+				var container = document.getElementById('container');
+
+				for(var i=0; i<events.length; i++) {
+					el = document.createElement('div');
+					el.className = 'event event1';
+					//el.style.top = events[i].start + 'px';
+					// el.style.width = 620/(events[i].depth) + 'px';
+					el.style.width = '100px';
+					// el.style.height = (events[i].end - events[i].start) + 'px';
+					container.appendChild(el);			
+
+				}	
+			}
+
+			function render(events) {
+				var events = [];
+				for(i=0; i<cols.length; i++) {
+					for(j=0; j<cols[i].length; j++) {
+					}
+				}
+				
+
 				console.log(cols);
+
 			}
 
 			var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
-			depth(events);
 			layOutDay(events);
+			depth(events);
 		</script>
 
 	</body>
