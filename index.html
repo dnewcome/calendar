@@ -120,36 +120,24 @@
 				return cols;
 			}
 
-			function renderOne(events, width) {
+			function render(events) {
 				var container = document.getElementById('container');
 
 				for(var i=0; i<events.length; i++) {
 					el = document.createElement('div');
 					el.className = 'event event1';
-					//el.style.top = events[i].start + 'px';
-					// el.style.width = 620/(events[i].depth) + 'px';
-					el.style.width = '100px';
-					// el.style.height = (events[i].end - events[i].start) + 'px';
+					el.style.top = events[i].start + 'px';
+					el.style.width = 620/(events[i].depth+1) + 'px';
+					el.style.left = (620/(events[i].depth+1))*events[i].col + 'px';
+					el.style.height = (events[i].end - events[i].start) + 'px';
 					container.appendChild(el);			
-
 				}	
-			}
-
-			function render(events) {
-				var events = [];
-				for(i=0; i<cols.length; i++) {
-					for(j=0; j<cols[i].length; j++) {
-					}
-				}
-				
-
-				console.log(cols);
-
 			}
 
 			var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
 			layOutDay(events);
 			depth(events);
+			render(events);
 		</script>
 
 	</body>
