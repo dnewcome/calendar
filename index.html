@@ -77,9 +77,12 @@
 				var mark;
 				for (i = 0; i < events.length; i++) {
 					events[i].depth = events[i].col;
+					mark = events[i];
 					for (j = 0; j < events.length; j++) {
-						if(events[i].col < events[j].col && overlaps(events[i], events[j])) {
+						// if(events[i].col < events[j].col && overlaps(events[i], events[j])) {
+						if(mark.col < events[j].col && overlaps(mark, events[j])) {
 							events[i].depth++;	
+							mark = events[j];
 						}		
 					}		
 				}
