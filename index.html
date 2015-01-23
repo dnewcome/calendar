@@ -20,7 +20,6 @@
 				-moz-box-sizing: border-box;
 			}
 			.event1 {
-				height: 100px;
 				width: 596px;
 				left: 10px;
 				border: 1px solid #D6D6D6;
@@ -48,10 +47,12 @@
 
 		</style>
 		<div id="container" class="grey">
+			<!--
 			<div class="event event1">
 				<h2 class="title blue sans">Sample Item</h2>
 				<h3 class="location sans">Sample Location</h3>
 			</div>
+			-->
 		</div>
 		<script>
 			function renderTimeline() {
@@ -61,28 +62,61 @@
 					console.log(spacing*i);
 				}
 			}
-			renderTimeline();
+			// renderTimeline();
 
 			function startTimeCompare(a, b) {
 				return a.start - b.start;
 			};
 
+			function overlaps(a, b) {
+				return b.start >= a.start && b.start < a.end ||
+					b.end > a.start && b.end < a.end;
+			};
+
+			function depth(events) {
+				var mark;
+				for (i = 0; i < events.length; i++) {
+					events[i].depth = 0;
+					for (j = 0; j < events.length; j++) {
+						if(overlaps(events[i], events[j])) {
+							events[i].depth++;	
+						}		
+					}		
+				}
+			}
+
 			function layOutDay(events) {
-				var i, el,
+				var i, el, cols = [0],
 					container = document.getElementById('container');
 
 				events.sort(startTimeCompare);
 
+
 				for(i = 0; i < events.length; i++) {
+
 					el = document.createElement('div');
 					el.className = 'event event1';
 					el.style.top = events[i].start + 'px';
+					el.style.width = 620/(events[i].depth) + 'px';
+					el.style.height = (events[i].end - events[i].start) + 'px';
+
+					// look at first col
+					if (events[i].start >= cols[0]) {
+						cols[0] = events[i].end;
+						el.style.left = 0 + 'px';
+					}
+					// put in second col
+					else {
+						el.style.left = 300 + 'px';
+					}
+
 					container.appendChild(el);			
 				}
 			}
 
-			// var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
-			var events = [ {start: 540, end: 150}, {start: 30, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
+
+			var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
+			depth(events);
 			layOutDay(events);
 		</script>
 
