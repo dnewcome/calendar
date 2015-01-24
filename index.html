@@ -79,8 +79,7 @@
 					events[i].depth = events[i].col;
 					mark = events[i];
 					for (j = 0; j < events.length; j++) {
-						// if(events[i].col < events[j].col && overlaps(events[i], events[j])) {
-						if(mark.col < events[j].col && overlaps(mark, events[j])) {
+						if(mark.col < events[j].col && events[j].start >= mark.start && overlaps(mark, events[j])) {
 							events[i].depth++;	
 							mark = events[j];
 						}		
@@ -157,8 +156,22 @@
 				{start: 560, end: 620},
 				{start: 610, end: 670},
 				{start: 630, end: 670},
-				{start: 630, end: 670}
+				{start: 630, end: 670},
+				{start: 630, end: 670},
+				{start: 630, end: 670},
+				{start: 670, end: 685}
 			];
+
+/*
+			var events = [];
+			for(var i = 0; i<100; i++) {
+					
+				var start = Math.round(Math.random()*720), 
+				var end = Math.round(Math.random()*720), 
+				
+
+			}
+*/
 
 			layOutDay(events);
 			depth(events);
