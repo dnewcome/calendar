@@ -129,6 +129,7 @@
 				for(var i=0; i<events.length; i++) {
 					el = document.createElement('div');
 					el.className = 'event event1';
+					el.textContent = events[i].index;
 					el.style.top = events[i].start + 'px';
 					el.style.width = 620/(events[i].depth+1) + 'px';
 					el.style.left = (620/(events[i].depth+1))*events[i].col + 'px';
@@ -172,7 +173,7 @@
 					start = Math.round(Math.random()*720);
 					end = Math.round(Math.random()*720);
 				}
-				events.push({start: start, end: end});	
+				events.push({start: start, end: end, index: i});	
 			}
 
 			layOutDay(events);
