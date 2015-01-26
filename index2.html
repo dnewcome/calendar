@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Calendar</title>
+	</head>
+	<body>
+		<style>
+			/*
+			body {
+				-moz-box-sizing: border-box;
+			}
+			*/
+			#container {
+				position: relative;
+				width: 620px;
+				height: 720px;
+				border-left: 1px solid #D6D6D6;
+				border: 1px solid black;
+				-moz-box-sizing: border-box;
+			}
+			.event1 {
+				width: 596px;
+				left: 10px;
+				border: 1px solid #D6D6D6;
+				-moz-box-sizing: border-box;
+			}
+			.event {
+				border-left: 4px solid #4B6EA9;
+				background-color: white;
+				position: absolute;
+			}
+			.grey {
+				background-color: #ECECEC;
+			}
+			.dark-grey {
+				#686868
+			}
+			.blue {
+				color: #4B6EA9
+			}
+
+			.sans {
+				font-family: Sans-Serif;
+			}
+
+
+		</style>
+		<div id="container" class="grey">
+			<!--
+			<div class="event event1">
+				<h2 class="title blue sans">Sample Item</h2>
+				<h3 class="location sans">Sample Location</h3>
+			</div>
+			-->
+		</div>
+		<script>
+			function renderTimeline() {
+				var spacing = 720/24;
+				for(i = 0; i <= 12; i++) {
+					console.log((i+8)%12+1);
+					console.log(spacing*i);
+				}
+			}
+			// renderTimeline();
+
+			function startTimeCompare(a, b) {
+				return a.start - b.start;
+			};
+
+			function lengthCompare(a, b) {
+				return (a.end-a.start) - (b.end-b.start);
+			};
+
+			function overlaps(a, b) {
+				return b.start >= a.start && b.start < a.end ||
+					b.end > a.start && b.end < a.end;
+			};
+
+			function depth(events) {
+				var mark;
+				for (i = 0; i < events.length; i++) {
+					events[i].depth = events[i].col;
+					mark = events[i];
+					for (j = 0; j < events.length; j++) {
+						//if(mark.col < events[j].col && events[j].start >= mark.start && overlaps(mark, events[j])) {
+						if(mark.col < events[j].col && overlaps(mark, events[j])) {
+							events[i].depth++;	
+							mark = events[j];
+						}		
+					}		
+				}
+			}
+
+			function layOutDay(events) {
+				packEvents(events);
+			}
+
+			function packEvents(events) {
+				var i, j, el, cols = [[]], found;
+		
+				container.innerHTML = '';
+
+				// events.sort(lengthCompare).reverse();
+				events.sort(startTimeCompare);
+
+				for(i = 0; i < events.length; i++) {
+					found = false;
+
+					// look at first col
+					for(j=0; j<cols.length; j++) {
+						if (cols[j].length === 0 || events[i].start >= cols[j][cols[j].length-1].end) {
+							cols[j].push(events[i]);
+							events[i].col = j;
+							found = true;
+							break;
+						}
+					}
+					if(!found) {
+						cols.push([events[i]]);
+						events[i].col = j;
+					}
+				}
+				return cols;
+			}
+
+			function render(events, useDepth) {
+				var container = document.getElementById('container');
+
+				for(var i=0; i<events.length; i++) {
+					el = document.createElement('div');
+					el.className = 'event event1';
+					el.textContent = events[i].index;
+					el.style.top = events[i].start + 'px';
+
+					if(useDepth) {
+						el.style.width = 620/(events[i].depth+1) + 'px';
+						el.style.left = (620/(events[i].depth+1))*events[i].col + 'px';
+					}
+
+					else {
+						el.style.width = '50px';
+						el.style.left = events[i].col * 50 + 'px';
+					}
+					el.style.height = (events[i].end - events[i].start) + 'px';
+					container.appendChild(el);			
+				}	
+			}
+
+			//var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
+
+	/*
+			var events = [ 
+				{start: 30, end: 150},
+				{start: 540, end: 600},
+				{start: 560, end: 620},
+				{start: 610, end: 670},
+				{start: 610, end: 670}
+			];
+	*/
+
+			// failing case -- we need to find the max depth
+			// might have to do tree traversal to do this
+			function testCase1() {
+				return [ 
+					{start: 30, end: 150},
+					{start: 540, end: 600},
+					{start: 560, end: 620},
+					{start: 610, end: 670},
+					{start: 630, end: 670},
+					{start: 630, end: 670},
+					{start: 630, end: 670},
+					{start: 630, end: 670},
+					{start: 670, end: 685}
+				];
+			}
+
+			function testCase2() {
+				return [ 
+					{start: 540, end: 600, index: 0},
+					{start: 560, end: 620, index: 1},
+					{start: 610, end: 670, index: 2},
+					{start: 630, end: 670, index: 3},
+					{start: 630, end: 670, index: 4}
+				];
+			}
+
+			function generateRandom() {
+				var events = [];
+				for(var i = 0; i<10; i++) {
+					var start, end;	
+					start = Math.round(Math.random()*720);
+					end = Math.round(Math.random()*720);
+					while(!(start < end)) {
+						start = Math.round(Math.random()*720);
+						end = Math.round(Math.random()*720);
+					}
+					events.push({start: start, end: end, index: i});	
+				}
+				return events;
+			}
+		
+			// var events = generateRandom();
+			var events = testCase2();
+
+			function doCalendar(events) {
+				layOutDay(events);
+				depth(events);
+				render(events,true);
+				//render(events);
+			}
+			doCalendar(events);
+		</script>
+
+	</body>
+</html>
