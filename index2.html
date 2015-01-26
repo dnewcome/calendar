@@ -83,8 +83,8 @@
 					events[i].depth = events[i].col;
 					mark = events[i];
 					for (j = 0; j < events.length; j++) {
-						//if(mark.col < events[j].col && events[j].start >= mark.start && overlaps(mark, events[j])) {
-						if(mark.col < events[j].col && overlaps(mark, events[j])) {
+						if(mark.col < events[j].col && events[j].start >= mark.start && overlaps(mark, events[j])) {
+						//if(mark.col < events[j].col && overlaps(mark, events[j])) {
 							events[i].depth++;	
 							mark = events[j];
 						}		
@@ -93,16 +93,35 @@
 			}
 
 			function layOutDay(events) {
-				packEvents(events);
+				packEventsHoriz(events);
+			}
+
+			function packEventsHoriz(events) {
+				var i, j, el, cols = [[]], found, highwater;
+
+				for(i = 0; i < events.length; i++) {
+					found = false;
+
+					// look at first col
+					for(j=0; j<cols.length; j++) {
+						if (cols[j].length === 0 || events[i].start >= cols[j][cols[j].length-1].end) {
+							cols[j].push(events[i]);
+							events[i].col = j;
+							found = true;
+							break;
+						}
+					}
+					if(!found) {
+						cols.push([events[i]]);
+						events[i].col = j;
+					}
+				}
+				return cols;
 			}
 
 			function packEvents(events) {
 				var i, j, el, cols = [[]], found;
-		
-				container.innerHTML = '';
 
-				// events.sort(lengthCompare).reverse();
-				events.sort(startTimeCompare);
 
 				for(i = 0; i < events.length; i++) {
 					found = false;
@@ -149,15 +168,15 @@
 
 			//var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
 
-	/*
-			var events = [ 
-				{start: 30, end: 150},
-				{start: 540, end: 600},
-				{start: 560, end: 620},
-				{start: 610, end: 670},
-				{start: 610, end: 670}
-			];
-	*/
+			// this is the nominal given case 
+			function testCase0() {
+				return [ 
+					{start: 30, end: 150},
+					{start: 540, end: 600},
+					{start: 560, end: 620},
+					{start: 610, end: 670}
+				];
+			}
 
 			// failing case -- we need to find the max depth
 			// might have to do tree traversal to do this
@@ -185,6 +204,29 @@
 				];
 			}
 
+			function testCase3() {
+				return [ 
+					{start: 540, end: 600, index: 0},
+					{start: 560, end: 620, index: 1},
+					{start: 610, end: 670, index: 2},
+					{start: 680, end: 690, index: 3},
+					{start: 680, end: 690, index: 4},
+					{start: 681, end: 690, index: 5}
+				];
+			}
+
+			function testCase4() {
+				return [ 
+					{start: 540, end: 600, index: 0},
+					{start: 560, end: 620, index: 1},
+					{start: 560, end: 640, index: 5},
+					{start: 610, end: 670, index: 2},
+					{start: 630, end: 670, index: 3},
+					{start: 650, end: 670, index: 4},
+					{start: 650, end: 670, index: 6}
+				];
+			}
+
 			function generateRandom() {
 				var events = [];
 				for(var i = 0; i<10; i++) {
@@ -200,9 +242,11 @@
 				return events;
 			}
 		
-			// var events = generateRandom();
-			var events = testCase2();
+			var events = generateRandom();
+			//var events = testCase4();
 
+			// events.sort(lengthCompare).reverse();
+			events.sort(startTimeCompare);
 			function doCalendar(events) {
 				layOutDay(events);
 				depth(events);
