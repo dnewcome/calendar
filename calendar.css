@@ -1,0 +1,66 @@
+#container {
+	position: relative;
+	width: 620px;
+	height: 720px;
+	border-left: 1px solid #D6D6D6;
+	overflow: hidden;
+}
+.event {
+	background-color: white;
+	position: absolute;
+	overflow: hidden;
+	box-sizing: border-box;
+	border: 1px solid #D6D6D6;
+}
+
+/* separate element for blue bar for sharp 90 degree border edge */
+.bluebar {
+	border-left: 4px solid #4B6EA9;
+	position: absolute;
+}
+
+/* todo: didn't end up doing atomic, should remove these color classes */
+.grey {
+	background-color: #ECECEC;
+}
+.dark-grey {
+	#686868
+}
+.blue {
+	color: #91A5C8;
+	font-weight: 500;
+}
+.sans {
+	font-family: Sans-Serif;
+}
+
+#timeline {
+	position: relative;
+	/* todo: hacky -30 */
+	top: -30px;
+	height: 720px;
+	padding-right: 10px;
+}
+
+li {
+	text-align: right;
+	line-height: 30px;
+	list-style-type: none;
+	height: 30px;
+	color: #6a6a6a;
+	font-family: Sans-Serif;
+	text-transform: uppercase;
+}
+li span {
+	font-size: 9px;
+	color: grey;
+}
+
+h2 {
+	margin: 0;
+	font-size: 13px;
+}
+h3 {
+	margin: 0;
+	font-size: 10px;
+}

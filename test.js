@@ -7,7 +7,7 @@ describe('test suite', function() {
 	it('should work', function(done) {
 		this.timeout = 5000;
 		var events = [{start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670}];
-		var expected = [{"start":30,"end":150,"col":0,"depth":0,"width":600,"left":0},{"start":540,"end":600,"col":0,"clear":true,"depth":1,"width":300,"left":0},{"start":560,"end":620,"col":1,"depth":1,"width":300,"left":300},{"start":610,"end":670,"col":0,"depth":0,"width":300,"left":0}]
+		var expected = [{"start":30,"end":150,"col":0,"depth":0,"width":600,"left":0},{"start":540,"end":600,"col":0,"clear":true,"depth":1,"width":300,"left":0},{"start":560,"end":620,"col":1,"depth":1,"width":300,"left":300},{"start":610,"end":670,"col":0,"depth":0,"width":300,"left":0}];
 
 		jsdom.env({
 		  file: "index.html",

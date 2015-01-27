@@ -3,77 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Calendar</title>
+		<link href="calendar.css" rel="stylesheet"></link>
 	</head>
 	<body>
-		<style>
-			#container {
-				position: relative;
-				width: 620px;
-				height: 720px;
-				border-left: 1px solid #D6D6D6;
-				overflow: hidden;
-			}
-			.event {
-				background-color: white;
-				position: absolute;
-				overflow: hidden;
-				box-sizing: border-box;
-				border: 1px solid #D6D6D6;
-			}
-
-			/* separate element for blue bar for sharp 90 degree border edge */
-			.bluebar {
-				border-left: 4px solid #4B6EA9;
-				position: absolute;
-			}
-
-			/* todo: didn't end up doing atomic, should remove these color classes */
-			.grey {
-				background-color: #ECECEC;
-			}
-			.dark-grey {
-				#686868
-			}
-			.blue {
-				color: #91A5C8;
-				font-weight: 500;
-			}
-			.sans {
-				font-family: Sans-Serif;
-			}
-			
-			#timeline {
-				position: relative;
-				/* todo: hacky -30 */
-				top: -30px;
-				height: 720px;
-				padding-right: 10px;
-			}
-
-			li {
-				text-align: right;
-				line-height: 30px;
-				list-style-type: none;
-				height: 30px;
-				color: #6a6a6a;
-				font-family: Sans-Serif;
-				text-transform: uppercase;
-			}
-			li span {
-				font-size: 9px;
-				color: grey;
-			}
-			
-			h2 {
-				margin: 0;
-				font-size: 13px;
-			}
-			h3 {
-				margin: 0;
-				font-size: 10px;
-			}
-
-		</style>
 		<ul style="float:left" id="timeline">
 			<li>9:00 <span>am</span></li>
 			<li><span>9:30</span></li>
@@ -102,108 +34,16 @@
 			<li>9:00 <span>pm</span></li>
 		</ul>
 		<div id="container" style="float:left" class="grey"></div>
+
 		<script src="calendar.js"></script>
+		<script src="index.js"></script>
 		<script>
 
-//var events = [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];
-
-// this is the nominal given case 
-function testCase0() {
-	return [ 
-		{start: 30, end: 150},
-		{start: 540, end: 600},
-		{start: 560, end: 620},
-		{start: 610, end: 670}
-	];
-}
-
-// failing case -- we need to find the max depth
-// might have to do tree traversal to do this
-function testCase1() {
-	return [ 
-		{start: 30, end: 150, index: 0},
-		{start: 540, end: 600, index: 1},
-		{start: 560, end: 620, index: 2},
-		{start: 610, end: 670, index: 3},
-		{start: 630, end: 670, index: 4},
-		{start: 630, end: 670, index: 5},
-		{start: 630, end: 670, index: 6},
-		{start: 630, end: 670, index: 7},
-		{start: 670, end: 685, index: 8}
-	];
-}
-
-function testCase2() {
-	return [ 
-		{start: 540, end: 600, index: 0},
-		{start: 560, end: 620, index: 1},
-		{start: 610, end: 670, index: 2},
-		{start: 630, end: 670, index: 3},
-		{start: 630, end: 670, index: 4}
-	];
-}
-
-function testCase3() {
-	return [ 
-		{start: 540, end: 600, index: 0},
-		{start: 560, end: 620, index: 1},
-		{start: 610, end: 670, index: 2},
-		{start: 680, end: 690, index: 3},
-		{start: 680, end: 690, index: 4},
-		{start: 681, end: 690, index: 5}
-	];
-}
-
-function testCase4() {
-	return [ 
-		{start: 540, end: 600, index: 0},
-		{start: 560, end: 620, index: 1},
-		{start: 560, end: 640, index: 5},
-		{start: 610, end: 670, index: 2},
-		{start: 630, end: 670, index: 3},
-		{start: 650, end: 670, index: 4},
-		{start: 650, end: 870, index: 6}
-	];
-}
-function testCaseNominal() {
-	return [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];	
-}
-
-var renderHeight = 720;
-
-function generateRandom() {
-	var events = [];
-	for(var i = 0; i<50; i++) {
-		var start, end;	
-		start = Math.round(Math.random()*renderHeight);
-		end = Math.round(Math.random()*renderHeight);
-		while(!(start < end)) {
-			start = Math.round(Math.random()*renderHeight);
-			end = Math.round(Math.random()*renderHeight);
-		}
-		events.push({start: start, end: end, index: i});	
-	}
-	return events;
-}
-
-function generateFixedLength() {
-	var events = [];
-	for(var i = 0; i<20; i++) {
-		var start, end;	
-		// start = Math.round(Math.random()*renderHeight);
-		start = window.crypto.getRandomValues(new Uint32Array(1))[0]/10000000;
-		end = start + 20;
-		events.push({start: start, end: end, index: i});	
-	}
-	return events;
-}
-
-// var events = generateFixedLength();
- var events = generateRandom();
-// var events = testCaseNominal();
+			// var events = generateFixedLength();
+			var events = generateRandom();
+			// var events = testCaseNominal();
 
 			doCalendar(events);
 		</script>
-
 	</body>
 </html>

@@ -9,16 +9,16 @@ var eventWidths = [];
 
 function startTimeCompare(a, b) {
 	return a.start - b.start;
-};
+}
 
 function lengthCompare(a, b) {
 	return (a.end-a.start) - (b.end-b.start);
-};
+}
 
 function overlaps(a, b) {
 	return b.start >= a.start && b.start < a.end ||
 		b.end > a.start && b.end < a.end;
-};
+}
 
 function depth(events) {
 	var mark, i, j;
@@ -47,7 +47,6 @@ function packEventsHoriz(events) {
 
 		// iterate over columns looking for a place to put the event
 		for(j=0; j<cols.length; j++) {
-			// if (cols[j].length === 0 || events[i].start >= cols[j][cols[j].length-1].end) {
 			if (events[i].start >= cols[j][cols[j].length-1].end) {
 				cols[j].push(events[i]);
 				events[i].col = j;
@@ -61,8 +60,7 @@ function packEventsHoriz(events) {
 					maxcol = 0;
 					events[i].clear = true;
 				}
-				highwater = Math.max(highwater, events[i].end)
-				//console.log(highwater);
+				highwater = Math.max(highwater, events[i].end);
 				break;
 			}
 		}
@@ -71,9 +69,8 @@ function packEventsHoriz(events) {
 			cols.push([events[i]]);
 			events[i].col = j;
 		}
-		highwater = Math.max(highwater, events[i].end)
-		maxcol = Math.max(maxcol, j)
-		// console.log(maxcol);
+		highwater = Math.max(highwater, events[i].end);
+		maxcol = Math.max(maxcol, j);
 	}
 	eventWidths.push(maxcol);
 	return cols;
