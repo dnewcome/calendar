@@ -6,8 +6,6 @@
 	</head>
 	<body>
 		<style>
-			html {
-			}
 			#container {
 				position: relative;
 				width: 620px;
@@ -28,6 +26,8 @@
 				border-left: 4px solid #4B6EA9;
 				position: absolute;
 			}
+
+			/* todo: didn't end up doing atomic, should remove these color classes */
 			.grey {
 				background-color: #ECECEC;
 			}
@@ -44,6 +44,7 @@
 			
 			#timeline {
 				position: relative;
+				/* todo: hacky -30 */
 				top: -30px;
 				height: 720px;
 				padding-right: 10px;

@@ -1,3 +1,5 @@
+'use strict';
+
 var renderWidth = 600;
 var renderHeight = 720;
 var containerPadding = 10;
@@ -17,7 +19,7 @@ function overlaps(a, b) {
 };
 
 function depth(events) {
-	var mark;
+	var mark, i, j;
 	for (i = 0; i < events.length; i++) {
 		events[i].depth = events[i].col;
 		mark = events[i];
@@ -78,6 +80,7 @@ function packEventsHoriz(events) {
 function render(events, useDepth) {
 	var container = document.getElementById('container');
 	var itemWidth = eventWidths.shift();
+	var el, bluebar;
 	for(var i=0; i<events.length; i++) {
 		if(events[i].clear) {
 			itemWidth = eventWidths.shift();
