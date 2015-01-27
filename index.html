@@ -20,6 +20,7 @@
 				position: absolute;
 				overflow: hidden;
 				box-sizing: border-box;
+				border: 1px solid #D6D6D6;
 			}
 
 			/* separate element for blue bar for sharp 90 degree border edge */
@@ -34,7 +35,8 @@
 				#686868
 			}
 			.blue {
-				color: #4B6EA9
+				color: #91A5C8;
+				font-weight: 500;
 			}
 			.sans {
 				font-family: Sans-Serif;
@@ -277,6 +279,9 @@
 					{start: 650, end: 870, index: 6}
 				];
 			}
+			function testCaseNominal() {
+				return [ {start: 30, end: 150}, {start: 540, end: 600}, {start: 560, end: 620}, {start: 610, end: 670} ];	
+			}
 
 			function generateRandom() {
 				var events = [];
@@ -305,9 +310,9 @@
 				return events;
 			}
 		
-			var events = generateFixedLength();
-			//var events = generateRandom();
-			// var events = testCase1();
+			// var events = generateFixedLength();
+			// var events = generateRandom();
+			var events = testCaseNominal();
 
 			// events.sort(lengthCompare).reverse();
 			events.sort(startTimeCompare);
