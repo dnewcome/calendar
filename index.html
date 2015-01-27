@@ -13,6 +13,7 @@
 				width: 620px;
 				height: 720px;
 				border-left: 1px solid #D6D6D6;
+				overflow: hidden;
 			}
 			.event1 {
 				width: 596px;
@@ -28,6 +29,8 @@
 				*/
 				box-sizing: border-box;
 			}
+
+			/* separate element for blue bar for sharp 90 degree border edge */
 			.bluebar {
 				border-left: 4px solid #4B6EA9;
 				position: absolute;
@@ -283,7 +286,7 @@
 					{start: 610, end: 670, index: 2},
 					{start: 630, end: 670, index: 3},
 					{start: 650, end: 670, index: 4},
-					{start: 650, end: 670, index: 6}
+					{start: 650, end: 870, index: 6}
 				];
 			}
 
@@ -302,8 +305,8 @@
 				return events;
 			}
 		
-			//var events = generateRandom();
-			var events = testCase2();
+			// var events = generateRandom();
+			var events = testCase4();
 
 			// events.sort(lengthCompare).reverse();
 			events.sort(startTimeCompare);
