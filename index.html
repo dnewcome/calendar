@@ -20,13 +20,17 @@
 				border: 1px solid #D6D6D6;
 			}
 			.event {
-				border-left: 4px solid #4B6EA9;
 				background-color: white;
 				position: absolute;
 				overflow: hidden;
 				/*
+				border-left: 4px solid #4B6EA9;
 				*/
 				box-sizing: border-box;
+			}
+			.bluebar {
+				border-left: 4px solid #4B6EA9;
+				position: absolute;
 			}
 			.grey {
 				background-color: #ECECEC;
@@ -40,6 +44,7 @@
 			.sans {
 				font-family: Sans-Serif;
 			}
+			
 			#timeline {
 				position: relative;
 				top: -30px;
@@ -100,8 +105,9 @@
 		</ul>
 		<div id="container" style="float:left" class="grey"></div>
 		<script>
-			var renderWidth = 620;
+			var renderWidth = 600;
 			var renderHeight = 720;
+			var containerPadding = 10;
 
 			function startTimeCompare(a, b) {
 				return a.start - b.start;
@@ -187,6 +193,12 @@
 
 				for(var i=0; i<events.length; i++) {
 					el = document.createElement('div');
+
+					bluebar = document.createElement('div');
+					bluebar.className = 'bluebar';
+					bluebar.style.top = events[i].start + 'px';
+					bluebar.style.height = (events[i].end - events[i].start) + 'px';
+
 					el.className = 'event event1';
 					el.textContent = events[i].index;
 					el.style.top = events[i].start + 'px';
@@ -196,7 +208,8 @@
 
 					if(useDepth) {
 						el.style.width = renderWidth/(events[i].depth+1) + 'px';
-						el.style.left = (renderWidth/(events[i].depth+1))*events[i].col + 'px';
+						el.style.left = (renderWidth/(events[i].depth+1))*events[i].col + containerPadding + 'px';
+						bluebar.style.left = (renderWidth/(events[i].depth+1))*events[i].col + containerPadding + 'px';
 
 						events[i].width = renderWidth/(events[i].depth+1);
 						events[i].left = (renderWidth/(events[i].depth+1))*events[i].col;
@@ -205,9 +218,11 @@
 					else {
 						el.style.width = '50px';
 						el.style.left = events[i].col * 50 + 'px';
+						bluebar.style.left = events[i].col * 50 + 'px';
 					}
 					el.style.height = (events[i].end - events[i].start) + 'px';
 					container.appendChild(el);			
+					container.appendChild(bluebar);			
 				}	
 			}
 
