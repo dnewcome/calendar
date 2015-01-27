@@ -15,18 +15,10 @@
 				border-left: 1px solid #D6D6D6;
 				overflow: hidden;
 			}
-			.event1 {
-				width: 596px;
-				left: 10px;
-				border: 1px solid #D6D6D6;
-			}
 			.event {
 				background-color: white;
 				position: absolute;
 				overflow: hidden;
-				/*
-				border-left: 4px solid #4B6EA9;
-				*/
 				box-sizing: border-box;
 			}
 
@@ -185,32 +177,6 @@
 				return cols;
 			}
 
-/*
-			function packEvents(events) {
-				var i, j, el, cols = [[]], found;
-
-
-				for(i = 0; i < events.length; i++) {
-					found = false;
-
-					// look at first col
-					for(j=0; j<cols.length; j++) {
-						if (cols[j].length === 0 || events[i].start >= cols[j][cols[j].length-1].end) {
-							cols[j].push(events[i]);
-							events[i].col = j;
-							found = true;
-							break;
-						}
-					}
-					if(!found) {
-						cols.push([events[i]]);
-						events[i].col = j;
-					}
-				}
-				return cols;
-			}
-*/
-
 			function render(events, useDepth) {
 				var container = document.getElementById('container');
 				var itemWidth = eventWidths.shift();
@@ -225,7 +191,7 @@
 					bluebar.style.top = events[i].start + 'px';
 					bluebar.style.height = (events[i].end - events[i].start) + 'px';
 
-					el.className = 'event event1';
+					el.className = 'event';
 					el.style.top = events[i].start + 'px';
 
 					el.innerHTML = '<h2 class="title blue sans">Sample Item ' + events[i].index + '</h2>' +
@@ -314,7 +280,7 @@
 
 			function generateRandom() {
 				var events = [];
-				for(var i = 0; i<10; i++) {
+				for(var i = 0; i<50; i++) {
 					var start, end;	
 					start = Math.round(Math.random()*renderHeight);
 					end = Math.round(Math.random()*renderHeight);
@@ -326,8 +292,21 @@
 				}
 				return events;
 			}
+
+			function generateFixedLength() {
+				var events = [];
+				for(var i = 0; i<20; i++) {
+					var start, end;	
+					// start = Math.round(Math.random()*renderHeight);
+					start = window.crypto.getRandomValues(new Uint32Array(1))[0]/10000000;
+					end = start + 20;
+					events.push({start: start, end: end, index: i});	
+				}
+				return events;
+			}
 		
-			var events = generateRandom();
+			var events = generateFixedLength();
+			//var events = generateRandom();
 			// var events = testCase1();
 
 			// events.sort(lengthCompare).reverse();
