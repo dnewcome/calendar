@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/dnewcome/calendar",
   "dependencies": {
-    "chai": "^1.10.0"
+    "chai": "^1.10.0",
+    "jsdom": "^3.0.3"
   }
 }
