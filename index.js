@@ -2,6 +2,8 @@
  * Test datasets and random data generators
  */
 
+'use strict';
+
 // this is the nominal given case 
 function testCaseNominal() {
 	return [ 

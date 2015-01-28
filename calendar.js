@@ -1,7 +1,13 @@
+/**
+ * Calendar layout implementation
+ *
+ * module exports layOutDay function used
+ *  to render a set of events to the calendar
+ */
+
 var layOutDay = (function() {
 'use strict';
 
-// todo: pass in as params
 var renderWidth = 600,
 	renderHeight = 720,
 	containerPadding = 10,
@@ -16,6 +22,12 @@ function overlaps(a, b) {
 		b.end > a.start && b.end < a.end;
 }
 
+/**
+ * Pack conflicting events into as few columns as possible
+ * using a "leftmost free slot" heuristic. Events that 
+ * fully "clear" the current set of conflicts reset the 
+ * width calculation. 
+ */
 function packEvents(events) {
 	var i,
 		j,
@@ -24,6 +36,8 @@ function packEvents(events) {
 		cols = [],
 		highwater = 0,
 		maxcol = 0;
+
+	events.sort(startTimeCompare);
 
 	for(i = 0; i < events.length; i++) {
 		found = false;
@@ -57,11 +71,19 @@ function packEvents(events) {
 	return cols;
 }
 
+/**
+ * render packed events to the DOM.
+ * we shift event widths from the event "clear"
+ * stack to determine the width of the current
+ * conflict set.
+ */
 function render(events) {
 	var container = document.getElementById('container'),
 		itemWidth = eventWidths.shift(),
 		el,
 		bluebar;
+
+	container.innerHTML = '';
 
 	for (var i = 0; i < events.length; i++) {
 		if (events[i].clear) {
@@ -78,8 +100,8 @@ function render(events) {
 
 
 		el.innerHTML = 
-			'<div style="margin:5px"><h2 class="title blue sans">Sample Item</h2>' +
-			'<h3 class="location sans">Sample Location</h3></div>';
+			'<div class="Mpx-5"><h2 class="C-blue Fw-500 sans">Sample Item</h2>' +
+			'<h3 class="C-grey sans">Sample Location</h3></div>';
 
 		el.style.width = renderWidth/(itemWidth+1) + 'px';
 		el.style.left = (renderWidth/(itemWidth+1))*events[i].col + containerPadding + 'px';
@@ -96,8 +118,6 @@ function render(events) {
 }
 
 function layOutDay(events) {
-	document.getElementById('container').innerHTML = '';
-	events.sort(startTimeCompare);
 	packEvents(events);
 	return render(events);
 }
@@ -106,5 +126,6 @@ if(typeof process != 'undefined') {
 	// running under node.js
 	module.exports = layOutDay;
 }
+
 return layOutDay;
 }());
