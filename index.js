@@ -1,3 +1,7 @@
+/**
+ * Test datasets and random data generators
+ */
+
 // this is the nominal given case 
 function testCaseNominal() {
 	return [ 
@@ -57,32 +61,23 @@ function testCase4() {
 
 var renderHeight = 720;
 
-function generateRandom() {
-	var events = [];
-	for(var i = 0; i<50; i++) {
-		var start, end;	
-		start = Math.round(Math.random()*renderHeight);
-		end = Math.round(Math.random()*renderHeight);
-		while(start > end) {
-			start = Math.round(Math.random()*renderHeight);
-			end = Math.round(Math.random()*renderHeight);
-		}
-		events.push({start: start, end: end, index: i});	
-	}
-	return events;
-}
+function generateRandom(n, length) {
+	var i,
+		start,
+		end,
+		events = [];
 
-function generateFixedLength(useCryptoRnd) {
-	var events = [];
-	for(var i = 0; i<20; i++) {
-		var start, end;	
-		if(useCryptoRnd) {
-			start = window.crypto.getRandomValues(new Uint32Array(1))[0]/10000000;
+	for(i = 0; i < n; i++) {
+		start = Math.round(Math.random()*renderHeight);
+		if (length) {
+			end = start + length;
 		}
 		else {
-			start = Math.round(Math.random()*renderHeight);
+			end = Math.round(Math.random()*renderHeight);
 		}
-		end = start + 20;
+		while (start > end) {
+			end = Math.round(Math.random()*renderHeight);
+		}
 		events.push({start: start, end: end, index: i});	
 	}
 	return events;

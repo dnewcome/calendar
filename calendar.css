@@ -26,6 +26,12 @@
 .dark-grey {
 	#686868
 }
+.F-l {
+	float: left;
+}
+.D-n {
+	display: none;
+}
 .blue {
 	color: #91A5C8;
 	font-weight: 500;
@@ -42,7 +48,7 @@
 	padding-right: 10px;
 }
 
-li {
+#timeline li {
 	text-align: right;
 	line-height: 30px;
 	list-style-type: none;
@@ -51,7 +57,7 @@ li {
 	font-family: Sans-Serif;
 	text-transform: uppercase;
 }
-li span {
+#timeline li span {
 	font-size: 9px;
 	color: grey;
 }
