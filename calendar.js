@@ -35,7 +35,7 @@ function depth(events) {
 	}
 }
 
-function layOutDay(events) {
+function _layOutDay(events) {
 	packEventsHoriz(events);
 }
 
@@ -120,12 +120,11 @@ function render(events, useDepth) {
 
 
 function doCalendar(events) {
-	// events.sort(lengthCompare).reverse();
+	document.getElementById('container').innerHTML = '';
 	events.sort(startTimeCompare);
-	layOutDay(events);
+	_layOutDay(events);
 	depth(events);
 	return render(events,true);
-	//render(events);
 }
 
 if(typeof process != 'undefined') {

@@ -1,5 +1,5 @@
 // this is the nominal given case 
-function testCase0() {
+function testCaseNominal() {
 	return [ 
 		{start: 30, end: 150},
 		{start: 540, end: 600},
@@ -54,7 +54,6 @@ function testCase4() {
 		{start: 650, end: 870, index: 6}
 	];
 }
-
 
 var renderHeight = 720;
 

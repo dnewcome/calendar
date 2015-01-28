@@ -39,11 +39,26 @@
 		<script src="index.js"></script>
 		<script>
 
-			// var events = generateFixedLength();
-			var events = generateRandom();
-			// var events = testCaseNominal();
-
+			var events = testCaseNominal();
 			doCalendar(events);
+
+			function doRandom() {
+				doCalendar(generateRandom());
+			}
+			function doRandomFixedLength() {
+				doCalendar(generateFixedLength());
+			}
+
 		</script>
+		<ul>
+			<li>
+				<label for="random-length">Random start, random length<label>
+				<button id="random-length" onClick="doRandom()">Generate</button>
+			</li>
+			<li>
+				<label for="fixed-length">Random start, fixed length<label>
+				<button id="fixed-length" onClick="doRandomFixedLength()">Generate</button>
+			</li>
+		</ul>
 	</body>
 </html>
