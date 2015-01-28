@@ -61,13 +61,12 @@ function testCase4() {
 	];
 }
 
-var renderHeight = 720;
-
 function generateRandom(n, length) {
 	var i,
 		start,
 		end,
-		events = [];
+		events = [],
+		renderHeight = 720;
 
 	for(i = 0; i < n; i++) {
 		start = Math.round(Math.random()*renderHeight);

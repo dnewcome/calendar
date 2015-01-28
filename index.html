@@ -6,7 +6,7 @@
 		<link href="calendar.css" rel="stylesheet"></link>
 	</head>
 	<body>
-		<ul id="timeline" class="F-l">
+		<ul id="timeline">
 			<li>9:00 <span>am</span></li>
 			<li><span>9:30</span></li>
 			<li>10:00 <span>am</span></li>
@@ -33,16 +33,16 @@
 			<li><span>8:30</span></li>
 			<li>9:00 <span>pm</span></li>
 		</ul>
-		<div id="container" class="Bc-grey F-l"></div>
+		<div id="container"></div>
 
 		<script src="calendar.js"></script>
 		<script src="index.js"></script>
 		<script>
 			/* run fuzz test, generate random events */
-			function doRandom() {
+			function layOutRandom() {
 				layOutDay(generateRandom(50));
 			}
-			function doRandomFixedLength() {
+			function layOutRandomFixedLength() {
 				layOutDay(generateRandom(50, 20));
 			}
 			layOutDay(testCaseNominal());

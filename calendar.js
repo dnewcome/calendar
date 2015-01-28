@@ -49,7 +49,7 @@ function packEvents(events) {
 				events[i].col = j;
 				found = true;
 
-				// this is when we 'clear' totally and start a new context
+				// 'clear' and start a new context
 				if (events[i].start >= highwater) {
 					eventWidths.push(maxcol);
 					maxcol = 0;
@@ -59,7 +59,8 @@ function packEvents(events) {
 				break;
 			}
 		}
-		// case where we add another col
+
+		// add additional column
 		if (!found) {
 			cols.push([events[i]]);
 			events[i].col = j;
@@ -68,7 +69,8 @@ function packEvents(events) {
 		maxcol = Math.max(maxcol, j);
 	}
 	eventWidths.push(maxcol);
-	return cols;
+	// todo: we don't need cols at all
+	//return cols;
 }
 
 /**
@@ -89,28 +91,32 @@ function render(events) {
 		if (events[i].clear) {
 			itemWidth = eventWidths.shift();
 		}
+
 		el = document.createElement('div');
 		el.className = 'event';
 		el.style.top = events[i].start + 'px';
+		el.style.height = (events[i].end - events[i].start) + 'px';
+
+		// todo: get item width added to item
+		el.style.width = renderWidth/(itemWidth+1) + 'px';
+		el.style.left = (renderWidth/(itemWidth+1))*events[i].col + containerPadding + 'px';
+
+		el.innerHTML = 
+			'<div class="Mpx-5"><h2 class="C-blue Fw-500 sans">Sample Item</h2>' +
+			'<h3 class="C-grey sans">Sample Location</h3></div>';
 
 		bluebar = document.createElement('div');
 		bluebar.className = 'bluebar';
 		bluebar.style.top = events[i].start + 'px';
 		bluebar.style.height = (events[i].end - events[i].start) + 'px';
 
-
-		el.innerHTML = 
-			'<div class="Mpx-5"><h2 class="C-blue Fw-500 sans">Sample Item</h2>' +
-			'<h3 class="C-grey sans">Sample Location</h3></div>';
-
-		el.style.width = renderWidth/(itemWidth+1) + 'px';
-		el.style.left = (renderWidth/(itemWidth+1))*events[i].col + containerPadding + 'px';
+		// todo: get item width added to item
 		bluebar.style.left = (renderWidth/(itemWidth+1))*events[i].col + containerPadding + 'px';
 
+		// todo: we want to do this in pack, fields are use in unit test 
 		events[i].width = renderWidth/(itemWidth+1);
 		events[i].left = (renderWidth/(itemWidth+1))*events[i].col;
 
-		el.style.height = (events[i].end - events[i].start) + 'px';
 		container.appendChild(el);			
 		container.appendChild(bluebar);			
 	}	
@@ -122,7 +128,7 @@ function layOutDay(events) {
 	return render(events);
 }
 
-if(typeof process != 'undefined') {
+if (typeof process != 'undefined') {
 	// running under node.js
 	module.exports = layOutDay;
 }

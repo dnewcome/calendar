@@ -1,13 +1,16 @@
 #container {
 	position: relative;
+	float: left;
+	overflow: hidden;
 	width: 620px;
 	height: 720px;
 	border-left: 1px solid #D6D6D6;
-	overflow: hidden;
+	background-color: #ECECEC;
 }
 
 #timeline {
 	position: relative;
+	float: left;
 	top: -30px;
 	height: 720px;
 	padding-right: 10px;
@@ -16,16 +19,20 @@
 #timeline li {
 	text-align: right;
 	line-height: 30px;
+	font-size: 12.5px;
+	font-weight: bold;
 	list-style-type: none;
 	height: 30px;
 	color: #6a6a6a;
-	font-family: Sans-Serif;
+	font-family: Palatino, Serif;
+	letter-spacing: 0.5px;
 	text-transform: uppercase;
 }
 
 #timeline li span {
 	font-size: 9px;
-	color: grey;
+	color: #B7B7B7;
+	font-family: Sans-Serif;
 }
 
 .event {
@@ -34,47 +41,29 @@
 	overflow: hidden;
 	box-sizing: border-box;
 	border: 1px solid #D6D6D6;
+	font-family: Sans-Serif;
 }
 
 .event h2 {
+	color: #91A5C8;
 	margin: 0;
 	font-size: 13px;
+	font-weight: 500;
 }
 
 .event h3 {
 	margin: 0;
-	font-size: 10px;
+	font-size: 9px;
+	color: grey;
+}
+.event div {
+	margin: 5px;
+	margin-left: 10px;
 }
 
 /* separate element for blue bar for sharp 90 degree border edge */
 .bluebar {
 	border-left: 4px solid #4B6EA9;
 	position: absolute;
-}
-
-/** 
-* some "atomic" styles 
-* http://www.smashingmagazine.com/2013/10/21/challenging-css-best-practices-atomic-approach/
-*/
-.Bc-grey {
-	background-color: #ECECEC;
-}
-.F-l {
-	float: left;
-}
-.Mpx-5 {
-	margin: 5px;
-}
-.C-blue {
-	color: #91A5C8;
-}
-.C-grey {
-	color: grey;
-}
-.Fw-500 {
-	font-weight: 500;
-}
-.sans {
-	font-family: Sans-Serif;
 }
 
