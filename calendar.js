@@ -11,35 +11,12 @@ function startTimeCompare(a, b) {
 	return a.start - b.start;
 }
 
-function lengthCompare(a, b) {
-	return (a.end-a.start) - (b.end-b.start);
-}
-
 function overlaps(a, b) {
 	return b.start >= a.start && b.start < a.end ||
 		b.end > a.start && b.end < a.end;
 }
 
-function depth(events) {
-	var mark, i, j;
-	for (i = 0; i < events.length; i++) {
-		events[i].depth = events[i].col;
-		mark = events[i];
-		for (j = 0; j < events.length; j++) {
-			if(mark.col < events[j].col && events[j].start >= mark.start && overlaps(mark, events[j])) {
-			//if(mark.col < events[j].col && overlaps(mark, events[j])) {
-				events[i].depth++;	
-				mark = events[j];
-			}		
-		}		
-	}
-}
-
-function _layOutDay(events) {
-	packEventsHoriz(events);
-}
-
-function packEventsHoriz(events) {
+function packEvents(events) {
 	var i, j, el, cols = [], found, highwater = 0, maxcol = 0;
 
 	for(i = 0; i < events.length; i++) {
@@ -118,18 +95,16 @@ function render(events, useDepth) {
 	return events;
 }
 
-
 function layOutDay(events) {
 	document.getElementById('container').innerHTML = '';
 	events.sort(startTimeCompare);
-	_layOutDay(events);
-	depth(events);
+	packEvents(events);
 	return render(events,true);
 }
 
 if(typeof process != 'undefined') {
 	// running under node.js
-	module.exports = doCalendar;
+	module.exports = layOutDay;
 }
 return layOutDay;
 }());
