@@ -1,4 +1,4 @@
-var doCalendar = (function() {
+var layOutDay = (function() {
 'use strict';
 
 // todo: pass in as params
@@ -119,7 +119,7 @@ function render(events, useDepth) {
 }
 
 
-function doCalendar(events) {
+function layOutDay(events) {
 	document.getElementById('container').innerHTML = '';
 	events.sort(startTimeCompare);
 	_layOutDay(events);
@@ -131,5 +131,5 @@ if(typeof process != 'undefined') {
 	// running under node.js
 	module.exports = doCalendar;
 }
-return doCalendar;
+return layOutDay;
 }());

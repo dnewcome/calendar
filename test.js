@@ -14,7 +14,7 @@ describe('test suite', function() {
 		  scripts: ["calendar.js"],
 		  done: function (errors, window) {
 			setTimeout(function() {
-				var actual = window.doCalendar(events);
+				var actual = window.layOutDay(events);
 				assert.deepEqual(actual, expected);
 				done();
 			}, 1000); 
