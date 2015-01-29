@@ -9,10 +9,8 @@ var layOutDay = (function() {
 'use strict';
 
 var renderWidth = 600,
-	renderHeight = 720,
 	containerPadding = 10,
-	eventWidths = [],
-	debug = true;
+	debug = false;
 
 function startTimeCompare(a, b) {
 	return a.start - b.start;
@@ -30,9 +28,9 @@ function log(msg) {
 }
 
 /**
- * Pack conflicting events into as few columns as possible
+ * Pack conflicting events into as few columns as reasonably possible 
  * using a "leftmost free slot" heuristic. Events that 
- * fully "clear" the current set of conflicts reset the 
+ * fully clear the current set of conflicts reset the 
  * width calculation. 
  */
 function packEvents(events) {
@@ -40,15 +38,15 @@ function packEvents(events) {
 		j,
 		k,
 		el,
-		found,
 		evt,
+		found,
 		cols = [],
 		region = [],
 		maxcol = 0;
 
 	events.sort(startTimeCompare);
 
-	for(i = 0; i < events.length; i++) {
+	for (i = 0; i < events.length; i++) {
 		found = false;
 		evt = events[i];
 
@@ -57,10 +55,9 @@ function packEvents(events) {
 			if (evt.start >= cols[j]) {
 				// 'clear' and start a new context
 				if (evt.start >= Math.max.apply(null, cols)) {
-					eventWidths.push(maxcol);
 					for (k = 0; k < region.length; k++) {
 						region[k].width = renderWidth/(maxcol+1); 
-						region[k].left = (renderWidth/(maxcol+1))*region[k].col;
+						region[k].left = (renderWidth/(maxcol+1))*region[k].col + containerPadding;
 					}
 					maxcol = 0;
 					evt.clear = true;
@@ -85,11 +82,10 @@ function packEvents(events) {
 		maxcol = Math.max(maxcol, j);
 	}
 	// push the last width
-	eventWidths.push(maxcol);
 	log(region);
 	for (k = 0; k < region.length; k++) {
 		region[k].width = renderWidth/(maxcol+1); 
-		region[k].left = (renderWidth/(maxcol+1))*region[k].col;
+		region[k].left = (renderWidth/(maxcol+1))*region[k].col + containerPadding;
 	}
 	return events;
 }
@@ -99,36 +95,37 @@ function packEvents(events) {
  */
 function render(events) {
 	var container = document.getElementById('container'),
-		el,
+		evt,
+		evtDom,
 		bluebar;
 
 	container.innerHTML = '';
 
 	for (var i = 0; i < events.length; i++) {
-		el = document.createElement('section');
-		el.className = 'event';
-		el.style.top = events[i].start + 'px';
-		el.style.height = (events[i].end - events[i].start) + 'px';
-		el.style.width = events[i].width + 'px';
-		// todo: where does container padding belong?
-		el.style.left = events[i].left + containerPadding + 'px';
-		el.innerHTML = 
+		evt = events[i];
+		evtDom = document.createElement('section');
+		evtDom.className = 'event';
+		evtDom.style.top = evt.start + 'px';
+		evtDom.style.height = (evt.end - evt.start) + 'px';
+		evtDom.style.width = evt.width + 'px';
+		evtDom.style.left = evt.left + 'px';
+		evtDom.innerHTML = 
 			'<h2>Sample Item</h2>' +
 			'<h3>Sample Location</h3>';
-		container.appendChild(el);			
+		container.appendChild(evtDom);			
 
 		bluebar = document.createElement('div');
 		bluebar.className = 'bluebar';
-		bluebar.style.top = events[i].start + 'px';
-		bluebar.style.height = (events[i].end - events[i].start) + 'px';
-		bluebar.style.left = events[i].left + containerPadding + 'px';
+		bluebar.style.top = evt.start + 'px';
+		bluebar.style.height = (evt.end - evt.start) + 'px';
+		bluebar.style.left = evt.left + 'px';
 		container.appendChild(bluebar);			
 	}	
 	return events;
 }
 
 function layOutDay(events) {
-	return render(packEvents(events));
+	render(packEvents(events));
 }
 
 if (typeof process != 'undefined') {
