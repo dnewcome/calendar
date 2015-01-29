@@ -1,4 +1,4 @@
-#container {
+.calendarday {
 	position: relative;
 	float: left;
 	overflow: hidden;
@@ -42,6 +42,8 @@
 	box-sizing: border-box;
 	border: 1px solid #D6D6D6;
 	font-family: Sans-Serif;
+}
+.event div {
 	padding-top: 5px;
 	padding-left: 10px;
 }

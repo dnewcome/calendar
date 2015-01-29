@@ -35,22 +35,20 @@
 		</ul>
 		<!--
 		<div id="container" style="padding-left:10px"><div style="position:relative"id="canvas"></div></div>
-			-->
-		<div id="container"></div>
-
+		-->
+		<div id="container" class="calendarday"></div>
 
 		<script src="calendar.js"></script>
 		<script src="index.js"></script>
 		<script>
 			var calendarDay = new CalendarDay('container', 600, 10);
-			/* run fuzz test, generate random events */
-			function layOutRandom() {
-				layOutDay(generateRandom(50));
+
+			function layOutDay(events) {
+				calendarDay.layOutDay(events);
 			}
-			function layOutRandomFixedLength() {
-				layOutDay(generateRandom(50, 20));
-			}
-			calendarDay.layOutDay(testCaseNominal());
+
+
+			layOutDay(testCaseNominal());
 		</script>
 	</body>
 </html>

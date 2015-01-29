@@ -117,8 +117,8 @@ CalendarDay.prototype.render = function(events) {
 		evtDom.style.width = evt.width + 'px';
 		evtDom.style.left = evt.left + 'px';
 		evtDom.innerHTML = 
-			'<h2>Sample Item</h2>' +
-			'<h3>Sample Location</h3>';
+			'<div><h2>Sample Item</h2>' +
+			'<h3>Sample Location</h3><div>';
 		this.container.appendChild(evtDom);			
 
 		bluebar = document.createElement('div');

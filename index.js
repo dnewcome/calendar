@@ -84,3 +84,10 @@ function generateRandom(n, length) {
 	return events;
 }
 
+/* run fuzz test, generate random events */
+function layOutRandom() {
+	calendarDay.layOutDay(generateRandom(50));
+}
+function layOutRandomFixedLength() {
+	calendarDay.layOutDay(generateRandom(50, 20));
+}
