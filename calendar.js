@@ -5,12 +5,20 @@
  *  to render a set of events to the calendar
  */
 
-var layOutDay = (function() {
+var CalendarDay = (function() {
 'use strict';
 
-var renderWidth = 600,
-	containerPadding = 10,
-	debug = false;
+function CalendarDay(container, width, padding, debug) {
+	if (!container.nodeName) {
+		this.container = document.getElementById(container);
+	}
+	else {
+		this.container = container;
+	}
+	this.renderWidth = width;
+	this.containerPadding = padding;
+	this.debug = debug;
+}
 
 function startTimeCompare(a, b) {
 	return a.start - b.start;
@@ -22,7 +30,7 @@ function overlaps(a, b) {
 }
 
 function log(msg) {
-	if(debug) {
+	if(typeof debug !== 'undefined' && debug === true) {
 		console.log(msg);
 	}
 }
@@ -33,7 +41,7 @@ function log(msg) {
  * fully clear the current set of conflicts reset the 
  * width calculation. 
  */
-function packEvents(events) {
+CalendarDay.prototype.packEvents = function (events) {
 	var i,
 		j,
 		k,
@@ -56,8 +64,8 @@ function packEvents(events) {
 				// 'clear' and start a new context
 				if (evt.start >= Math.max.apply(null, cols)) {
 					for (k = 0; k < region.length; k++) {
-						region[k].width = renderWidth/(maxcol+1); 
-						region[k].left = (renderWidth/(maxcol+1))*region[k].col + containerPadding;
+						region[k].width = this.renderWidth/(maxcol+1); 
+						region[k].left = (this.renderWidth/(maxcol+1))*region[k].col + this.containerPadding;
 					}
 					maxcol = 0;
 					evt.clear = true;
@@ -84,8 +92,8 @@ function packEvents(events) {
 	// push the last width
 	log(region);
 	for (k = 0; k < region.length; k++) {
-		region[k].width = renderWidth/(maxcol+1); 
-		region[k].left = (renderWidth/(maxcol+1))*region[k].col + containerPadding;
+		region[k].width = this.renderWidth/(maxcol+1); 
+		region[k].left = (this.renderWidth/(maxcol+1))*region[k].col + this.containerPadding;
 	}
 	return events;
 }
@@ -93,13 +101,12 @@ function packEvents(events) {
 /**
  * render packed events to the DOM.
  */
-function render(events) {
-	var container = document.getElementById('container'),
-		evt,
+CalendarDay.prototype.render = function(events) {
+		var evt,
 		evtDom,
 		bluebar;
 
-	container.innerHTML = '';
+	this.container.innerHTML = '';
 
 	for (var i = 0; i < events.length; i++) {
 		evt = events[i];
@@ -112,26 +119,26 @@ function render(events) {
 		evtDom.innerHTML = 
 			'<h2>Sample Item</h2>' +
 			'<h3>Sample Location</h3>';
-		container.appendChild(evtDom);			
+		this.container.appendChild(evtDom);			
 
 		bluebar = document.createElement('div');
 		bluebar.className = 'bluebar';
 		bluebar.style.top = evt.start + 'px';
 		bluebar.style.height = (evt.end - evt.start) + 'px';
 		bluebar.style.left = evt.left + 'px';
-		container.appendChild(bluebar);			
+		this.container.appendChild(bluebar);			
 	}	
 	return events;
 }
 
-function layOutDay(events) {
-	render(packEvents(events));
-}
+CalendarDay.prototype.layOutDay = function (events) {
+	this.render(this.packEvents(events));
+};
 
 if (typeof process != 'undefined') {
 	// running under node.js
 	module.exports = packEvents;
 }
 
-return layOutDay;
+return CalendarDay;
 }());
