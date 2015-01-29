@@ -29,11 +29,6 @@ function startTimeCompare(a, b) {
     return a.start - b.start;
 }
 
-function overlaps(a, b) {
-    return b.start >= a.start && b.start < a.end ||
-        b.end > a.start && b.end < a.end;
-}
-
 function log(msg) {
     if(typeof debug !== 'undefined' && debug === true) {
         console.log(msg);
@@ -86,7 +81,7 @@ CalendarDay.prototype.packEvents = function (events) {
         if (events[i+1] === undefined || events[i+1].start >= Math.max.apply(null, cols)) {
             for (k = 0; k < region.length; k++) {
                 region[k].width = this.renderWidth / (maxcol+1); 
-                region[k].left = (this.renderWidth / (maxcol+1)) * region[k].col;
+                region[k].left = this.renderWidth / (maxcol+1) * region[k].col;
             }
             log(region);
             maxcol = 0;
@@ -100,7 +95,7 @@ CalendarDay.prototype.packEvents = function (events) {
  * render packed events to the DOM.
  */
 CalendarDay.prototype.render = function(events) {
-        var evt,
+    var evt,
         evtDom,
         bluebar;
 

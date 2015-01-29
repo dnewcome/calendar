@@ -1,6 +1,7 @@
-var assert = require('chai').assert;
-var CalendarDay = require('./calendar');
-var jsdom = require("jsdom");
+'use strict';
+var assert = require('chai').assert,
+    CalendarDay = require('./calendar'),
+    jsdom = require("jsdom");
 
 describe('calendar browser test suite', function() {
     it('should render nominal case', function(done) {
