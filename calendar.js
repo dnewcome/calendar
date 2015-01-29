@@ -44,8 +44,8 @@ function packEvents(events) {
 
 		// iterate over columns looking for a place to put the event
 		for (j = 0; j < cols.length; j++) {
-			if (events[i].start >= cols[j][cols[j].length-1].end) {
-				cols[j].push(events[i]);
+			if (events[i].start >= cols[j]) {
+				cols[j] = events[i].end;
 				events[i].col = j;
 				found = true;
 
@@ -62,7 +62,7 @@ function packEvents(events) {
 
 		// add additional column
 		if (!found) {
-			cols.push([events[i]]);
+			cols.push([events[i].end]);
 			events[i].col = j;
 		}
 		highwater = Math.max(highwater, events[i].end);
