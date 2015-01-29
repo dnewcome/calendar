@@ -11,7 +11,8 @@ var layOutDay = (function() {
 var renderWidth = 600,
 	renderHeight = 720,
 	containerPadding = 10,
-	eventWidths = [];
+	eventWidths = [],
+	debug = true;
 
 function startTimeCompare(a, b) {
 	return a.start - b.start;
@@ -20,6 +21,12 @@ function startTimeCompare(a, b) {
 function overlaps(a, b) {
 	return b.start >= a.start && b.start < a.end ||
 		b.end > a.start && b.end < a.end;
+}
+
+function log(msg) {
+	if(debug) {
+		console.log(msg);
+	}
 }
 
 /**
@@ -53,11 +60,11 @@ function packEvents(events) {
 					eventWidths.push(maxcol);
 					for (k = 0; k < region.length; k++) {
 						region[k].width = renderWidth/(maxcol+1); 
+						region[k].left = (renderWidth/(maxcol+1))*region[k].col;
 					}
 					maxcol = 0;
 					evt.clear = true;
-
-					console.log(region);
+					log(region);
 					region = [];
 				}
 
@@ -79,71 +86,54 @@ function packEvents(events) {
 	}
 	// push the last width
 	eventWidths.push(maxcol);
-	console.log(region);
+	log(region);
 	for (k = 0; k < region.length; k++) {
 		region[k].width = renderWidth/(maxcol+1); 
+		region[k].left = (renderWidth/(maxcol+1))*region[k].col;
 	}
+	return events;
 }
 
 /**
  * render packed events to the DOM.
- * we shift event widths from the event "clear"
- * stack to determine the width of the current
- * conflict set.
  */
 function render(events) {
 	var container = document.getElementById('container'),
-		itemWidth = eventWidths.shift(),
 		el,
 		bluebar;
 
 	container.innerHTML = '';
 
 	for (var i = 0; i < events.length; i++) {
-		if (events[i].clear) {
-			itemWidth = eventWidths.shift();
-		}
-
-		el = document.createElement('div');
+		el = document.createElement('section');
 		el.className = 'event';
 		el.style.top = events[i].start + 'px';
 		el.style.height = (events[i].end - events[i].start) + 'px';
-
-		// todo: get item width added to item
-		// el.style.width = renderWidth/(itemWidth+1) + 'px';
 		el.style.width = events[i].width + 'px';
-		el.style.left = (renderWidth/(itemWidth+1))*events[i].col + containerPadding + 'px';
-
+		// todo: where does container padding belong?
+		el.style.left = events[i].left + containerPadding + 'px';
 		el.innerHTML = 
-			'<div class="Mpx-5"><h2 class="C-blue Fw-500 sans">Sample Item</h2>' +
-			'<h3 class="C-grey sans">Sample Location</h3></div>';
+			'<h2>Sample Item</h2>' +
+			'<h3>Sample Location</h3>';
+		container.appendChild(el);			
 
 		bluebar = document.createElement('div');
 		bluebar.className = 'bluebar';
 		bluebar.style.top = events[i].start + 'px';
 		bluebar.style.height = (events[i].end - events[i].start) + 'px';
-
-		// todo: get item width added to item
-		bluebar.style.left = (renderWidth/(itemWidth+1))*events[i].col + containerPadding + 'px';
-
-		// todo: we want to do this in pack, fields are use in unit test 
-		events[i].width = renderWidth/(itemWidth+1);
-		events[i].left = (renderWidth/(itemWidth+1))*events[i].col;
-
-		container.appendChild(el);			
+		bluebar.style.left = events[i].left + containerPadding + 'px';
 		container.appendChild(bluebar);			
 	}	
 	return events;
 }
 
 function layOutDay(events) {
-	packEvents(events);
-	return render(events);
+	return render(packEvents(events));
 }
 
 if (typeof process != 'undefined') {
 	// running under node.js
-	module.exports = layOutDay;
+	module.exports = packEvents;
 }
 
 return layOutDay;
