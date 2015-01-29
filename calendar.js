@@ -33,44 +33,41 @@ function packEvents(events) {
 		j,
 		el,
 		found,
+		evt,
 		cols = [],
-		highwater = 0,
 		maxcol = 0;
 
 	events.sort(startTimeCompare);
 
 	for(i = 0; i < events.length; i++) {
 		found = false;
+		evt = events[i];
 
 		// iterate over columns looking for a place to put the event
 		for (j = 0; j < cols.length; j++) {
-			if (events[i].start >= cols[j]) {
-				cols[j] = events[i].end;
-				events[i].col = j;
-				found = true;
-
+			if (evt.start >= cols[j]) {
 				// 'clear' and start a new context
-				if (events[i].start >= highwater) {
+				if (evt.start >= Math.max.apply(null, cols)) {
 					eventWidths.push(maxcol);
 					maxcol = 0;
-					events[i].clear = true;
+					evt.clear = true;
 				}
-				highwater = Math.max(highwater, events[i].end);
+
+				cols[j] = evt.end;
+				evt.col = j;
+				found = true;
 				break;
 			}
 		}
 
 		// add additional column
 		if (!found) {
-			cols.push([events[i].end]);
+			cols.push([evt.end]);
 			events[i].col = j;
 		}
-		highwater = Math.max(highwater, events[i].end);
 		maxcol = Math.max(maxcol, j);
 	}
 	eventWidths.push(maxcol);
-	// todo: we don't need cols at all
-	//return cols;
 }
 
 /**
