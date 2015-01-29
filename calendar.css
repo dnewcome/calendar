@@ -41,13 +41,11 @@
 
 .event {
     background-color: white;
-    position: absolute;
     overflow: hidden;
+    height: 100%;
     box-sizing: border-box;
     border: 1px solid #D6D6D6;
     font-family: Sans-Serif;
-}
-.event div {
     padding-top: 5px;
     padding-left: 10px;
 }
@@ -69,5 +67,6 @@
 .bluebar {
     border-left: 4px solid #4B6EA9;
     position: absolute;
+    height: 100%;
 }
 
