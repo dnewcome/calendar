@@ -17,8 +17,8 @@ var CalendarDay = (function() {
 function CalendarDay(container, debug) {
     this.container = checkContainer(container);
 
-    // set container class here for less fidgety markup
-    // from the compoenent consumer's POV
+    // set container class here more convenient markup
+    // from the component consumer's POV
     // jsdom doesn't implement classList
     // TODO: use phantomjs for tests and remove this
     if(this.container.classList) {
@@ -80,7 +80,7 @@ CalendarDay.prototype.packEvents = function (events) {
         evt,
         found,
         cols = [],
-        region = [],
+        clear = 0,
         maxcol = 0;
 
     events.sort(startTimeCompare);
@@ -94,7 +94,6 @@ CalendarDay.prototype.packEvents = function (events) {
             if (evt.start >= cols[j]) {
                 cols[j] = evt.end;
                 evt.col = j;
-                region.push(evt);
                 found = true;
                 break;
             }
@@ -102,9 +101,8 @@ CalendarDay.prototype.packEvents = function (events) {
 
         // add additional column if no existing slot 
         if (!found) {
+            events[i].col = cols.length;
             cols.push([evt.end]);
-            region.push(evt);
-            events[i].col = j;
         }
         maxcol = Math.max(maxcol, j);
 
@@ -112,13 +110,12 @@ CalendarDay.prototype.packEvents = function (events) {
         if (events[i+1] === undefined ||
             events[i+1].start >= Math.max.apply(null, cols)
         ) {
-            for (k = 0; k < region.length; k++) {
-                region[k].width = this.renderWidth / (maxcol+1); 
-                region[k].left = this.renderWidth / (maxcol+1) * region[k].col;
+            for (k = clear; k <= i; k++) {
+                events[k].width = this.renderWidth / (maxcol+1); 
+                events[k].left = this.renderWidth / (maxcol+1) * events[k].col;
             }
-            log(region);
+            clear = i+1;
             maxcol = 0;
-            region = [];
         }
     }
     return events;
