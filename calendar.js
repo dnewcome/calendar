@@ -137,7 +137,7 @@ CalendarDay.prototype.layOutDay = function (events) {
 
 if (typeof process != 'undefined') {
 	// running under node.js
-	module.exports = packEvents;
+	module.exports = CalendarDay;
 }
 
 return CalendarDay;

@@ -2,16 +2,16 @@
   "name": "fb-challenge",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "calendar.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/dnewcome/calendar.git"
   },
   "author": "Dan Newcome <dan@dnuke.com> (http://dnuke.com/)",
-  "license": "ISC",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/dnewcome/calendar/issues"
   },
