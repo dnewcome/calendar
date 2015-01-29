@@ -40,7 +40,12 @@ calendarDay.layOutDay(events);
 
 ## Browser support
 
-The component has been tested on recent versions of Chrome and Firefox on OSX and Windows and on IE11.
+Tested on the following browsers:
+
+- Chrome OSX/Win
+- Firefox OSX/Win
+- Safari OSX
+- IE11 Win
 
 ## Running the tests
 
