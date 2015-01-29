@@ -15,21 +15,34 @@ var CalendarDay = (function() {
  * @param debug - true for debug log messages
  */
 function CalendarDay(container, debug) {
-    if (!container.nodeName) {
-        this.container = document.getElementById(container);
-    }
-    else {
-        this.container = container;
-    }
+    this.container = checkContainer(container);
 
+    // set container class here for less fidgety markup
+    // from the compoenent consumer's POV
+    // jsdom doesn't implement classList
+    // TODO: use phantomjs for tests and remove this
     if(this.container.classList) {
         this.container.classList.add('calendarday');
     }
     else {
         this.container.className += ' calendarday';
     }
+
     this.renderWidth = this.container.offsetWidth;
     this.debug = debug;
+}
+
+/**
+ * Get DOM node for container id if we don't 
+ * alredy have the DOM node for API convenence
+ * 
+ * @param container - DOM node or ID string 
+ */
+function checkContainer(container) {
+    if (!container.nodeName) {
+        container = document.getElementById(container);
+    }
+    return container;
 }
 
 /**

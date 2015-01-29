@@ -62,23 +62,29 @@ function testCase4() {
     ];
 }
 
-function generateRandom(n, length) {
+/**
+ * Generate random set of events for fuzz testing
+ *
+ * @param n - number of events to generate 
+ * @param max - max start or end value 
+ * @param length - specify a fixed event length
+ */
+function generateRandom(n, max, length) {
     var i,
         start,
         end,
-        events = [],
-        renderHeight = 720;
+        events = [];
 
     for (i = 0; i < n; i++) {
-        start = Math.round(Math.random()*renderHeight);
+        start = Math.round(Math.random() * max);
         if (length) {
             end = start + length;
         }
         else {
-            end = Math.round(Math.random()*renderHeight);
+            end = Math.round(Math.random() * max);
         }
         while (start > end) {
-            end = Math.round(Math.random()*renderHeight);
+            end = Math.round(Math.random() * max);
         }
         events.push({start: start, end: end, index: i});    
     }
@@ -87,8 +93,8 @@ function generateRandom(n, length) {
 
 /* run fuzz test, generate random events */
 function layOutRandom() {
-    calendarDay.layOutDay(generateRandom(50));
+    calendarDay.layOutDay(generateRandom(50, 720));
 }
 function layOutRandomFixedLength() {
-    calendarDay.layOutDay(generateRandom(50, 20));
+    calendarDay.layOutDay(generateRandom(50, 720, 20));
 }
