@@ -2,6 +2,7 @@
  * Test datasets and random data generators
  */
 
+/* global calendarDay */
 'use strict';
 
 // this is the nominal given case 

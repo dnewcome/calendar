@@ -63,20 +63,9 @@ CalendarDay.prototype.packEvents = function (events) {
         found = false;
         evt = events[i];
 
-        // iterate over columns looking for a place to put the event
+        // iterate over columns looking for a slot to put the event
         for (j = 0; j < cols.length; j++) {
             if (evt.start >= cols[j]) {
-                // 'clear' and start a new context
-                if (evt.start >= Math.max.apply(null, cols)) {
-                    for (k = 0; k < region.length; k++) {
-                        region[k].width = this.renderWidth/(maxcol+1); 
-                        region[k].left = (this.renderWidth/(maxcol+1))*region[k].col;
-                    }
-                    maxcol = 0;
-                    log(region);
-                    region = [];
-                }
-
                 cols[j] = evt.end;
                 evt.col = j;
                 region.push(evt);
@@ -85,22 +74,27 @@ CalendarDay.prototype.packEvents = function (events) {
             }
         }
 
-        // add additional column
+        // add additional column if no existing slot 
         if (!found) {
             cols.push([evt.end]);
             region.push(evt);
             events[i].col = j;
         }
         maxcol = Math.max(maxcol, j);
-    }
-    // push the last width
-    log(region);
-    for (k = 0; k < region.length; k++) {
-        region[k].width = this.renderWidth/(maxcol+1); 
-        region[k].left = (this.renderWidth/(maxcol+1))*region[k].col;
+
+        // look ahead and start a new context if event clears all prev events 
+        if (events[i+1] === undefined || events[i+1].start >= Math.max.apply(null, cols)) {
+            for (k = 0; k < region.length; k++) {
+                region[k].width = this.renderWidth / (maxcol+1); 
+                region[k].left = (this.renderWidth / (maxcol+1)) * region[k].col;
+            }
+            log(region);
+            maxcol = 0;
+            region = [];
+        }
     }
     return events;
-}
+};
 
 /**
  * render packed events to the DOM.
@@ -134,7 +128,7 @@ CalendarDay.prototype.render = function(events) {
         this.container.appendChild(bluebar);            
     }   
     return events;
-}
+};
 
 CalendarDay.prototype.layOutDay = function (events) {
     this.render(this.packEvents(events));
