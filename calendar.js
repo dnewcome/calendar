@@ -16,18 +16,7 @@ var CalendarDay = (function() {
  */
 function CalendarDay(container, debug) {
     this.container = checkContainer(container);
-
-    // set container class here more convenient markup
-    // from the component consumer's POV
-    // jsdom doesn't implement classList
-    // TODO: use phantomjs for tests and remove this
-    if(this.container.classList) {
-        this.container.classList.add('calendarday');
-    }
-    else {
-        this.container.className += ' calendarday';
-    }
-
+    addClass(this.container, 'calendarday');
     this.renderWidth = this.container.offsetWidth;
     this.debug = debug;
 }
@@ -43,6 +32,25 @@ function checkContainer(container) {
         container = document.getElementById(container);
     }
     return container;
+}
+
+/**
+ * Add class name to a DOM node
+ *
+ * here because jsdom doesn't implement classList
+ * TODO: use phantomjs for tests and remove this
+ *
+ * @param node - DOM node to receive class
+ * @param name - class name to add 
+ */
+function addClass(node, name) {
+    if(node.classList) {
+        node.classList.add(name);
+    }
+    else {
+        // kind of hacky, sorry 
+        node.className += ' ' + name;
+    }
 }
 
 /**
@@ -76,7 +84,6 @@ CalendarDay.prototype.packEvents = function (events) {
     var i,
         j,
         k,
-        el,
         evt,
         cols = [],
         clear = 0,
