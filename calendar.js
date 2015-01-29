@@ -89,7 +89,6 @@ CalendarDay.prototype.packEvents = function (events) {
 
         // add additional column if no existing slot 
         if (evt.start < Math.min.apply(null, cols)) {
-            console.log('adding col');
             evt.col = maxcol = cols.length;
             cols.push([evt.end]);
         }
