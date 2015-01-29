@@ -31,10 +31,12 @@ function overlaps(a, b) {
 function packEvents(events) {
 	var i,
 		j,
+		k,
 		el,
 		found,
 		evt,
 		cols = [],
+		region = [],
 		maxcol = 0;
 
 	events.sort(startTimeCompare);
@@ -49,12 +51,19 @@ function packEvents(events) {
 				// 'clear' and start a new context
 				if (evt.start >= Math.max.apply(null, cols)) {
 					eventWidths.push(maxcol);
+					for (k = 0; k < region.length; k++) {
+						region[k].width = renderWidth/(maxcol+1); 
+					}
 					maxcol = 0;
 					evt.clear = true;
+
+					console.log(region);
+					region = [];
 				}
 
 				cols[j] = evt.end;
 				evt.col = j;
+				region.push(evt);
 				found = true;
 				break;
 			}
@@ -63,11 +72,17 @@ function packEvents(events) {
 		// add additional column
 		if (!found) {
 			cols.push([evt.end]);
+			region.push(evt);
 			events[i].col = j;
 		}
 		maxcol = Math.max(maxcol, j);
 	}
+	// push the last width
 	eventWidths.push(maxcol);
+	console.log(region);
+	for (k = 0; k < region.length; k++) {
+		region[k].width = renderWidth/(maxcol+1); 
+	}
 }
 
 /**
@@ -95,7 +110,8 @@ function render(events) {
 		el.style.height = (events[i].end - events[i].start) + 'px';
 
 		// todo: get item width added to item
-		el.style.width = renderWidth/(itemWidth+1) + 'px';
+		// el.style.width = renderWidth/(itemWidth+1) + 'px';
+		el.style.width = events[i].width + 'px';
 		el.style.left = (renderWidth/(itemWidth+1))*events[i].col + containerPadding + 'px';
 
 		el.innerHTML = 
