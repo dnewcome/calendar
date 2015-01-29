@@ -37,7 +37,7 @@ function checkContainer(container) {
 /**
  * Add class name to a DOM node
  *
- * here because jsdom doesn't implement classList
+ * exists because jsdom doesn't implement classList
  * TODO: use phantomjs for tests and remove this
  *
  * @param node - DOM node to receive class
