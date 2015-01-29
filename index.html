@@ -1,53 +1,53 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Calendar</title>
-		<link href="calendar.css" rel="stylesheet"></link>
-	</head>
-	<body>
-		<ul id="timeline">
-			<li>9:00 <span>am</span></li>
-			<li><span>9:30</span></li>
-			<li>10:00 <span>am</span></li>
-			<li><span>10:30</span></li>
-			<li>11:00 <span>am</span></li>
-			<li><span>11:30</span></li>
-			<li>12:00 <span>pm</span></li>
-			<li><span>12:30</span></li>
-			<li>1:00 <span>pm</span></li>
-			<li><span>1:30</span></li>
-			<li>2:00 <span>pm</span></li>
-			<li><span>2:30</span></li>
-			<li>3:00 <span>pm</span></li>
-			<li><span>3:30</span></li>
-			<li>4:00 <span>pm</span></li>
-			<li><span>4:30</span></li>
-			<li>5:00 <span>pm</span></li>
-			<li><span>5:30</span></li>
-			<li>6:00 <span>pm</span></li>
-			<li><span>6:30</span></li>
-			<li>7:00 <span>pm</span></li>
-			<li><span>7:30</span></li>
-			<li>8:00 <span>pm</span></li>
-			<li><span>8:30</span></li>
-			<li>9:00 <span>pm</span></li>
-		</ul>
-		<!--
-		<div id="container" style="padding-left:10px"><div style="position:relative"id="canvas"></div></div>
-		-->
-		<div id="container" class="calendarday"></div>
+    <head>
+        <meta charset="utf-8">
+        <title>Calendar</title>
+        <link href="calendar.css" rel="stylesheet"></link>
+    </head>
+    <body>
+        <ul id="timeline">
+            <li>9:00 <span>am</span></li>
+            <li><span>9:30</span></li>
+            <li>10:00 <span>am</span></li>
+            <li><span>10:30</span></li>
+            <li>11:00 <span>am</span></li>
+            <li><span>11:30</span></li>
+            <li>12:00 <span>pm</span></li>
+            <li><span>12:30</span></li>
+            <li>1:00 <span>pm</span></li>
+            <li><span>1:30</span></li>
+            <li>2:00 <span>pm</span></li>
+            <li><span>2:30</span></li>
+            <li>3:00 <span>pm</span></li>
+            <li><span>3:30</span></li>
+            <li>4:00 <span>pm</span></li>
+            <li><span>4:30</span></li>
+            <li>5:00 <span>pm</span></li>
+            <li><span>5:30</span></li>
+            <li>6:00 <span>pm</span></li>
+            <li><span>6:30</span></li>
+            <li>7:00 <span>pm</span></li>
+            <li><span>7:30</span></li>
+            <li>8:00 <span>pm</span></li>
+            <li><span>8:30</span></li>
+            <li>9:00 <span>pm</span></li>
+        </ul>
+        <!--
+        <div id="container" style="padding-left:10px"><div style="position:relative"id="canvas"></div></div>
+        -->
+        <div id="container" class="calendarday"></div>
 
-		<script src="calendar.js"></script>
-		<script src="index.js"></script>
-		<script>
-			var calendarDay = new CalendarDay('container', 600, 10);
+        <script src="calendar.js"></script>
+        <script src="index.js"></script>
+        <script>
+            var calendarDay = new CalendarDay('container', 600, 10);
 
-			function layOutDay(events) {
-				calendarDay.layOutDay(events);
-			}
+            function layOutDay(events) {
+                calendarDay.layOutDay(events);
+            }
 
-			layOutDay(testCaseNominal());
-		</script>
-	</body>
+            layOutDay(testCaseNominal());
+        </script>
+    </body>
 </html>

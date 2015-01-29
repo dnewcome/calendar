@@ -1,69 +1,69 @@
 .calendarday {
-	position: relative;
-	float: left;
-	overflow: hidden;
-	width: 620px;
-	height: 720px;
-	border-left: 1px solid #D6D6D6;
-	background-color: #ECECEC;
+    position: relative;
+    float: left;
+    overflow: hidden;
+    width: 620px;
+    height: 720px;
+    border-left: 1px solid #D6D6D6;
+    background-color: #ECECEC;
 }
 
 #timeline {
-	position: relative;
-	float: left;
-	top: -30px;
-	height: 720px;
-	padding-right: 10px;
+    position: relative;
+    float: left;
+    top: -30px;
+    height: 720px;
+    padding-right: 10px;
 }
 
 #timeline li {
-	text-align: right;
-	line-height: 30px;
-	font-size: 12.5px;
-	font-weight: bold;
-	list-style-type: none;
-	height: 30px;
-	color: #6a6a6a;
-	font-family: Palatino, Serif;
-	letter-spacing: 0.5px;
-	text-transform: uppercase;
+    text-align: right;
+    line-height: 30px;
+    font-size: 12.5px;
+    font-weight: bold;
+    list-style-type: none;
+    height: 30px;
+    color: #6a6a6a;
+    font-family: Palatino, Serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 #timeline li span {
-	font-size: 9px;
-	color: #B7B7B7;
-	font-family: Sans-Serif;
+    font-size: 9px;
+    color: #B7B7B7;
+    font-family: Sans-Serif;
 }
 
 .event {
-	background-color: white;
-	position: absolute;
-	overflow: hidden;
-	box-sizing: border-box;
-	border: 1px solid #D6D6D6;
-	font-family: Sans-Serif;
+    background-color: white;
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid #D6D6D6;
+    font-family: Sans-Serif;
 }
 .event div {
-	padding-top: 5px;
-	padding-left: 10px;
+    padding-top: 5px;
+    padding-left: 10px;
 }
 
 .event h2 {
-	color: #91A5C8;
-	margin: 0;
-	font-size: 13px;
-	font-weight: 500;
+    color: #91A5C8;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .event h3 {
-	margin: 0;
-	font-size: 9px;
-	color: grey;
+    margin: 0;
+    font-size: 9px;
+    color: grey;
 }
 
 /* separate element for blue bar for sharp 90 degree border edge */
 .bluebar {
-	border-left: 4px solid #4B6EA9;
-	position: absolute;
+    border-left: 4px solid #4B6EA9;
+    position: absolute;
 }
 
