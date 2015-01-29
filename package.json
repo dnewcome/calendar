@@ -4,7 +4,8 @@
   "description": "",
   "main": "calendar.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "jshint *.js"
   },
   "repository": {
     "type": "git",

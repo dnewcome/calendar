@@ -1,4 +1,7 @@
+/* jshint node: true */
+/* global it, describe */
 'use strict';
+
 var assert = require('chai').assert,
     CalendarDay = require('./calendar'),
     jsdom = require("jsdom");
