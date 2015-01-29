@@ -1,11 +1,15 @@
+#lane {
+    float: left;
+    border-left: 1px solid #D6D6D6;
+    padding: 0 10px;
+    background-color: #ECECEC;
+}
+
 .calendarday {
     position: relative;
-    float: left;
     overflow: hidden;
-    width: 620px;
+    width: 600px;
     height: 720px;
-    border-left: 1px solid #D6D6D6;
-    background-color: #ECECEC;
 }
 
 #timeline {

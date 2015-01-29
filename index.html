@@ -33,15 +33,12 @@
             <li><span>8:30</span></li>
             <li>9:00 <span>pm</span></li>
         </ul>
-        <!--
-        <div id="container" style="padding-left:10px"><div style="position:relative"id="canvas"></div></div>
-        -->
-        <div id="container" class="calendarday"></div>
+        <div id="lane"><div id="container"></div></div>
 
         <script src="calendar.js"></script>
         <script src="index.js"></script>
         <script>
-            var calendarDay = new CalendarDay('container', 600, 10);
+            var calendarDay = new CalendarDay('container', 0);
 
             function layOutDay(events) {
                 calendarDay.layOutDay(events);

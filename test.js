@@ -48,18 +48,14 @@ describe('calendar browser test suite', function() {
         jsdom.env({
             file: 'index.html',
             scripts: ["calendar.js", "index.js"],
-            src: ['new CalendarDay("container", 600, 10).layOutDay(testCaseNominal());'],
+            src: ['new CalendarDay("container", 0).layOutDay(testCaseNominal());'],
             done: function (errors, window) {
                 var document = window.document;
                 var renderedEvents = document.querySelectorAll('#container section');
-                assert.equal(renderedEvents[0].style.left, '10px');
-                assert.equal(renderedEvents[1].style.left, '10px');
-                assert.equal(renderedEvents[2].style.left, '310px');
-                assert.equal(renderedEvents[3].style.left, '10px');
-                assert.equal(renderedEvents[0].style.width, '600px');
-                assert.equal(renderedEvents[1].style.width, '300px');
-                assert.equal(renderedEvents[2].style.width, '300px');
-                assert.equal(renderedEvents[3].style.width, '300px');
+                assert.equal(renderedEvents[0].style.top, '30px');
+                assert.equal(renderedEvents[1].style.top, '540px');
+                assert.equal(renderedEvents[2].style.top, '560px');
+                assert.equal(renderedEvents[3].style.top, '610px');
                 done();
             }}
         );
@@ -87,30 +83,29 @@ describe('calendar unit test suite', function() {
             end: 150,
             col: 0,
             width: 600,
-            left: 10
+            left: 0
         }, {
             start: 540,
             end: 600,
             col: 0,
-            clear: true,
             width: 300,
-            left: 10
+            left: 0
         }, {
             start: 560,
             end: 620,
             col: 1,
             width: 300,
-            left: 310
+            left: 300
         }, {
             start: 610,
             end: 670,
             col: 0,
             width: 300,
-            left: 10
+            left: 0
         }],
 
-        dummyDom = {nodeName: 'div'},
-        calendarDay = new CalendarDay(dummyDom, 600, 10),
+        dummyDom = {nodeName: 'div', offsetWidth: 600},
+        calendarDay = new CalendarDay(dummyDom, 0),
         actual = calendarDay.packEvents(events);
 
         assert.deepEqual(actual, expected);

@@ -8,14 +8,15 @@
 var CalendarDay = (function() {
 'use strict';
 
-function CalendarDay(container, width, padding, debug) {
+function CalendarDay(container, padding, debug) {
     if (!container.nodeName) {
         this.container = document.getElementById(container);
     }
     else {
         this.container = container;
     }
-    this.renderWidth = width;
+    this.container.classList.add('calendarday');
+    this.renderWidth = this.container.offsetWidth;
     this.containerPadding = padding;
     this.debug = debug;
 }
