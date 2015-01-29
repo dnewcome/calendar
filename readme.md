@@ -31,3 +31,12 @@ Render events on the timeline using the `layOutDay` method:
 ```
 calendarDay.layOutDay(events);
 ```
+
+## Running the tests
+
+Tests are run using mocha under nodejs. Run
+
+```
+$ npm install
+$ npm test
+```
