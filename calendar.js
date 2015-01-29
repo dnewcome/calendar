@@ -1,13 +1,19 @@
 /**
  * Calendar layout implementation
  *
- * module exports layOutDay function used
- *  to render a set of events to the calendar
+ * @exports CalendarDay - constructor 
  */
 
 var CalendarDay = (function() {
 'use strict';
 
+/**
+ * Create calendar layout functionality on DOM node
+ *
+ * @constructor
+ * @param container - id or DOM node
+ * @param debug - true for debug log messages
+ */
 function CalendarDay(container, debug) {
     if (!container.nodeName) {
         this.container = document.getElementById(container);
@@ -25,10 +31,20 @@ function CalendarDay(container, debug) {
     this.debug = debug;
 }
 
+/**
+ * Comparator for sorting by start time
+ * 
+ * @param a, b - events as {start, end} 
+ */
 function startTimeCompare(a, b) {
     return a.start - b.start;
 }
 
+/**
+ * logging utility
+ *
+ * @param msg - log/trace message
+ */
 function log(msg) {
     if(typeof debug !== 'undefined' && debug === true) {
         console.log(msg);
@@ -40,6 +56,8 @@ function log(msg) {
  * using a "leftmost free slot" heuristic. Events that 
  * fully clear the current set of conflicts reset the 
  * width calculation. 
+ *
+ * @param events - array of events as {start, end}
  */
 CalendarDay.prototype.packEvents = function (events) {
     var i,
@@ -93,6 +111,8 @@ CalendarDay.prototype.packEvents = function (events) {
 
 /**
  * render packed events to the DOM.
+ *
+ * @param events - array of processed events incl. {left, width}
  */
 CalendarDay.prototype.render = function(events) {
     var evt,
@@ -125,10 +145,20 @@ CalendarDay.prototype.render = function(events) {
     return events;
 };
 
+/**
+ * Toplevel driver function to lay out and render events
+ *
+ * @param events - array of events as {start, end}
+ */
 CalendarDay.prototype.layOutDay = function (events) {
     this.render(this.packEvents(events));
 };
 
+/**
+ * Make isomorphic - we run this under nodejs
+ * for the tests, and maybe later for server-side
+ * rendering of the event layout
+ */
 if (typeof process != 'undefined') {
     // running under node.js
     module.exports = CalendarDay;
