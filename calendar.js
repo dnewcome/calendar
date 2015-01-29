@@ -41,7 +41,7 @@ function startTimeCompare(a, b) {
 }
 
 /**
- * logging utility
+ * Logging utility
  *
  * @param msg - log/trace message
  */
@@ -52,10 +52,9 @@ function log(msg) {
 }
 
 /**
- * Pack conflicting events into as few columns as reasonably possible 
- * using a "leftmost free slot" heuristic. Events that 
- * fully clear the current set of conflicts reset the 
- * width calculation. 
+ * Pack conflicting events into as few columns as reasonably possible
+ * using a "leftmost free slot" heuristic. Events that fully clear
+ * the current set of conflicts reset the width calculation. 
  *
  * @param events - array of events as {start, end}
  */
@@ -110,7 +109,7 @@ CalendarDay.prototype.packEvents = function (events) {
 };
 
 /**
- * render packed events to the DOM.
+ * Render packed events to the DOM.
  *
  * @param events - array of processed events incl. {left, width}
  */
