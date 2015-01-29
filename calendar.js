@@ -21,6 +21,7 @@ function CalendarDay(container, debug) {
     else {
         this.container = container;
     }
+
     if(this.container.classList) {
         this.container.classList.add('calendarday');
     }
@@ -120,33 +121,33 @@ CalendarDay.prototype.render = function(events) {
         evtDom,
         bluebar;
 
-    this.container.innerHTML = '';
     if(!events) return;
+    this.clearEvents();
 
     for (var i = 0; i < events.length; i++) {
         evt = events[i];
         evtDom = document.createElement('section');
-        evtDom.style.position = 'absolute';
-        evtDom.style.top = evt.start + 'px';
-        evtDom.style.height = (evt.end - evt.start) + 'px';
-        evtDom.style.width = evt.width + 'px';
-        evtDom.style.left = evt.left + 'px';
+        evtDom.style.cssText = [
+            'position:', 'absolute;',
+            'top:', evt.start, 'px;',
+            'height:', evt.end - evt.start, 'px;',
+            'width:', evt.width, 'px;',
+            'left:', evt.left, 'px;'
+        ].join('');
         evtDom.innerHTML = 
             '<div class="bluebar"></div>' +
             '<div class="event"><h2>Sample Item</h2>' +
             '<h3>Sample Location</h3></div>';
         this.container.appendChild(evtDom);         
-
-/*
-        bluebar = document.createElement('div');
-        bluebar.className = 'bluebar';
-        bluebar.style.top = evt.start + 'px';
-        bluebar.style.height = (evt.end - evt.start) + 'px';
-        bluebar.style.left = evt.left + 'px';
-        this.container.appendChild(bluebar);            
-*/
     }   
     return events;
+};
+
+/**
+ * Clear UI container of all rendered events
+ */
+CalendarDay.prototype.clearEvents = function() {
+    this.container.innerHTML = '';
 };
 
 /**
