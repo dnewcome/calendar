@@ -78,7 +78,6 @@ CalendarDay.prototype.packEvents = function (events) {
         k,
         el,
         evt,
-        found,
         cols = [],
         clear = 0,
         maxcol = 0;
@@ -86,35 +85,36 @@ CalendarDay.prototype.packEvents = function (events) {
     events.sort(startTimeCompare);
 
     for (i = 0; i < events.length; i++) {
-        found = false;
         evt = events[i];
 
-        // iterate over columns looking for a slot to put the event
-        for (j = 0; j < cols.length; j++) {
-            if (evt.start >= cols[j]) {
-                cols[j] = evt.end;
-                evt.col = j;
-                found = true;
-                break;
-            }
-        }
-
         // add additional column if no existing slot 
-        if (!found) {
-            events[i].col = cols.length;
+        if (evt.start < Math.min.apply(null, cols)) {
+            console.log('adding col');
+            evt.col = maxcol = cols.length;
             cols.push([evt.end]);
         }
-        maxcol = Math.max(maxcol, j);
+        else {
+            // iterate over columns looking for a slot to put the event
+            for (j = 0; j < cols.length; j++) {
+                if (evt.start >= cols[j]) {
+                    cols[j] = evt.end;
+                    evt.col = j;
+                    maxcol = Math.max(maxcol, j);
+                    break;
+                }
+            }
+        }
 
         // look ahead and start a new context if event clears all prev events 
         if (events[i+1] === undefined ||
             events[i+1].start >= Math.max.apply(null, cols)
         ) {
+            // write out left/width values for cleared set
             for (k = clear; k <= i; k++) {
-                events[k].width = this.renderWidth / (maxcol+1); 
-                events[k].left = this.renderWidth / (maxcol+1) * events[k].col;
+                events[k].width = this.renderWidth / (maxcol + 1); 
+                events[k].left = this.renderWidth / (maxcol + 1) * events[k].col;
             }
-            clear = i+1;
+            clear = i + 1;
             maxcol = 0;
         }
     }
