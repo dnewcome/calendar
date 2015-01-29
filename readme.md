@@ -38,10 +38,14 @@ var events = [{start: 30, end: 60}];
 calendarDay.layOutDay(events);
 ```
 
+## Browser support
+
+The component has been tested on recent versions of Chrome and Firefox on OSX and Windows and on IE11.
+
 ## Running the tests
 
-Tests are run using mocha under nodejs. Basic smoke test is done using jsdom to check that the events 
-actually rendered. The layout/packing algorithm is completely separate from the rendering functions, so 
+Tests are run using mocha under nodejs. Basic smoke testing is done using jsdom to check that the events 
+actually rendered. The layout/packing algorithm is completely separate from the rendering function, so 
 it can be tested in isolation.  Run:
 
 ```
@@ -49,3 +53,7 @@ $ npm install
 $ npm test
 ```
 
+## Future work
+
+The current implementation does not support custom time scales and does not provide any conveninece 
+facilities for generating the time graduations to the side of the rendered events. 
