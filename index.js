@@ -68,7 +68,7 @@ function generateRandom(n, length) {
         events = [],
         renderHeight = 720;
 
-    for(i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         start = Math.round(Math.random()*renderHeight);
         if (length) {
             end = start + length;

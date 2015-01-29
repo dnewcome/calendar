@@ -8,16 +8,20 @@
 var CalendarDay = (function() {
 'use strict';
 
-function CalendarDay(container, padding, debug) {
+function CalendarDay(container, debug) {
     if (!container.nodeName) {
         this.container = document.getElementById(container);
     }
     else {
         this.container = container;
     }
-    this.container.classList.add('calendarday');
+    if(this.container.classList) {
+        this.container.classList.add('calendarday');
+    }
+    else {
+        this.container.className += ' calendarday';
+    }
     this.renderWidth = this.container.offsetWidth;
-    this.containerPadding = padding;
     this.debug = debug;
 }
 
@@ -66,10 +70,9 @@ CalendarDay.prototype.packEvents = function (events) {
                 if (evt.start >= Math.max.apply(null, cols)) {
                     for (k = 0; k < region.length; k++) {
                         region[k].width = this.renderWidth/(maxcol+1); 
-                        region[k].left = (this.renderWidth/(maxcol+1))*region[k].col + this.containerPadding;
+                        region[k].left = (this.renderWidth/(maxcol+1))*region[k].col;
                     }
                     maxcol = 0;
-                    // evt.clear = true;
                     log(region);
                     region = [];
                 }
@@ -94,7 +97,7 @@ CalendarDay.prototype.packEvents = function (events) {
     log(region);
     for (k = 0; k < region.length; k++) {
         region[k].width = this.renderWidth/(maxcol+1); 
-        region[k].left = (this.renderWidth/(maxcol+1))*region[k].col + this.containerPadding;
+        region[k].left = (this.renderWidth/(maxcol+1))*region[k].col;
     }
     return events;
 }
@@ -108,6 +111,7 @@ CalendarDay.prototype.render = function(events) {
         bluebar;
 
     this.container.innerHTML = '';
+    if(!events) return;
 
     for (var i = 0; i < events.length; i++) {
         evt = events[i];

@@ -48,7 +48,7 @@ describe('calendar browser test suite', function() {
         jsdom.env({
             file: 'index.html',
             scripts: ["calendar.js", "index.js"],
-            src: ['new CalendarDay("container", 0).layOutDay(testCaseNominal());'],
+            src: ['new CalendarDay("container").layOutDay(testCaseNominal());'],
             done: function (errors, window) {
                 var document = window.document;
                 var renderedEvents = document.querySelectorAll('#container section');
@@ -104,8 +104,8 @@ describe('calendar unit test suite', function() {
             left: 0
         }],
 
-        dummyDom = {nodeName: 'div', offsetWidth: 600},
-        calendarDay = new CalendarDay(dummyDom, 0),
+        dummyDom = {nodeName: 'div', offsetWidth: 600, classList:{add:function(){}}},
+        calendarDay = new CalendarDay(dummyDom),
         actual = calendarDay.packEvents(events);
 
         assert.deepEqual(actual, expected);
