@@ -95,7 +95,9 @@ CalendarDay.prototype.packEvents = function (events) {
         maxcol = Math.max(maxcol, j);
 
         // look ahead and start a new context if event clears all prev events 
-        if (events[i+1] === undefined || events[i+1].start >= Math.max.apply(null, cols)) {
+        if (events[i+1] === undefined ||
+            events[i+1].start >= Math.max.apply(null, cols)
+        ) {
             for (k = 0; k < region.length; k++) {
                 region[k].width = this.renderWidth / (maxcol+1); 
                 region[k].left = this.renderWidth / (maxcol+1) * region[k].col;
