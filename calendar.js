@@ -48,7 +48,7 @@ function addClass(node, name) {
         node.classList.add(name);
     }
     else {
-        // kind of hacky, sorry 
+        // kind of hacky 
         node.className += ' ' + name;
     }
 }
